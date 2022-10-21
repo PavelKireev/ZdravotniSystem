@@ -1,8 +1,15 @@
+using ZdravotniSystem.Service;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.Add(new ServiceDescriptor(typeof(IAppointmentService), new AppointmentService()));
+builder.Services.Add(new ServiceDescriptor(typeof(IDoctorService), new DoctorService()));
+builder.Services.Add(new ServiceDescriptor(typeof(IPatientService), new PatientService()));
+
 
 var app = builder.Build();
 
