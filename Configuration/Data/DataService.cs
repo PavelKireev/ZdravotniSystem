@@ -40,7 +40,7 @@ namespace ZdravotniSystem.Configuration.Data
                 "CREATE TABLE IF NOT EXISTS appointment (" +
                 "id INTEGER PRIMARY KEY, " +
                 "doctor_id INTEGER NOT NULL, " +
-                "pacient_id INTEGER NOT NULL," +
+                "patient_id INTEGER NOT NULL," +
                 "time TEXT NOT NULL" +
                 "); " +
                 "CREATE TABLE IF NOT EXISTS doctor (" +

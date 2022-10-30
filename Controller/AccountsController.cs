@@ -8,7 +8,7 @@ using ZdravotniSystem.DB.Entity;
 namespace ZdravotniSystem.Controller
 {
     [ApiController]
-    public class AccountsController
+    public class AccountsController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
         private readonly JwtHandler _jwtHandler;
@@ -26,7 +26,7 @@ namespace ZdravotniSystem.Controller
         {
             var user = await _userManager.FindByNameAsync(userForAuthentication.Email);
             if (user == null || !await _userManager.CheckPasswordAsync(user, userForAuthentication.Password))
-                return Unauthorized(new AuthResponseDto { ErrorMessage = "Invalid Authentication" });
+                return  Unauthorized(new AuthResponseDto { ErrorMessage = "Invalid Authentication" });
             var signingCredentials = _jwtHandler.GetSigningCredentials();
             var claims = _jwtHandler.GetClaims(user);
             var tokenOptions = _jwtHandler.GenerateTokenOptions(signingCredentials, claims);

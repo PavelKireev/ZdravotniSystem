@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './error-pages/error-pages.component';
+import { JwtModule } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,14 @@ import { NotFoundComponent } from './error-pages/error-pages.component';
       { path: '404', component: NotFoundComponent },
       { path: '', redirectTo: '/home', pathMatch: 'full' },
       { path: '**', redirectTo: '/404', pathMatch: 'full' }
-    ])
+    ]),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ["localhost:5001"],
+        disallowedRoutesRoutes: []
+      }
+    })
   ],
   providers: [
     {
@@ -37,3 +45,8 @@ import { NotFoundComponent } from './error-pages/error-pages.component';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
+export function tokenGetter() {
+  return localStorage.getItem("token");
+}
