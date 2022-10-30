@@ -1,48 +1,31 @@
+import { ErrorHandlerService } from './shared/services/error-handler.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { NotFoundComponent } from './error-pages/not-found/not-found.component';
-import { JwtModule } from "@auth0/angular-jwt";
-
-
-export function tokenGetter() {
-  return localStorage.getItem("token");
-}
+import { NotFoundComponent } from './error-pages/error-pages.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavMenuComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent
+    NotFoundComponent
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    BrowserModule,
     HttpClientModule,
-    FormsModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot([
       { path: 'home', component: HomeComponent },
-      { path: 'company', loadChildren: () => import('./company/company.module').then(m => m.CompanyModule) },
+      //{ path: 'company', loadChildren: () => import('./company/company.module').then(m => m.CompanyModule) },
       { path: 'authentication', loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule) },
       { path: '404', component: NotFoundComponent },
       { path: '', redirectTo: '/home', pathMatch: 'full' },
       { path: '**', redirectTo: '/404', pathMatch: 'full' }
-    ]),
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: tokenGetter,
-        allowedDomains: ["localhost:5001"],
-        disallowedRoutesRoutes: []
-      }
-    })
+    ])
   ],
   providers: [
     {

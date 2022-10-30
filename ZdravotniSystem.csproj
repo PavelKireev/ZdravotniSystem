@@ -25,7 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\error-pages\error-pages.component.ts" />
     <None Remove="ClientApp\src\app\shared\service\authentication.service.ts" />
+    <None Remove="ClientApp\src\app\shared\service\file.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,7 +37,9 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\authentication\register-user\authentication.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\error-pages\error-pages.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\service\authentication.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\service\file.ts" />
   </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
