@@ -1,5 +1,9 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using ZdravotniSystem.Configuration;
 using ZdravotniSystem.Configuration.Data;
+using ZdravotniSystem.Configuration.Security;
 using ZdravotniSystem.Service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +14,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHostedService<LifeTimeService>();
 
 builder.Services.AddSingleton<DataService>();
+builder.Services.AddScoped<JwtHandler>();
+
 
 builder.Services.Add(new ServiceDescriptor(typeof(IAppointmentService), new AppointmentService()));
 builder.Services.Add(new ServiceDescriptor(typeof(IDoctorService), new DoctorService()));
@@ -32,4 +38,28 @@ app.MapControllerRoute(
 
 app.MapFallbackToFile("index.html"); ;
 
+var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+builder.Services.AddAuthentication(opt =>
+{
+    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtSettings["validIssuer"],
+        ValidAudience = jwtSettings["validAudience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+            .GetBytes(jwtSettings.GetSection("securityKey").Value))
+    };
+});
+
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.Run();
+
