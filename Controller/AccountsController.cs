@@ -29,7 +29,7 @@ namespace ZdravotniSystem.Controller
                 return  Unauthorized(new AuthResponseDto { ErrorMessage = "Invalid Authentication" });
             var signingCredentials = _jwtHandler.GetSigningCredentials();
             var claims = _jwtHandler.GetClaims(user);
-            var tokenOptions = _jwtHandler.GenerateTokenOptions(signingCredentials, claims);
+            var tokenOptions = _jwtHandler.GenerateTokenOptions(signingCredentials, await claims);
             var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
             return Ok(new AuthResponseDto { IsAuthSuccessful = true, Token = token });
         }

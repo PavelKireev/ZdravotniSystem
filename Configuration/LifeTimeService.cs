@@ -5,7 +5,7 @@ namespace ZdravotniSystem.Configuration
 {
     public class LifeTimeService : IHostedService
     {
-        private readonly DataService dataService;
+        public DataService dataService;
 
         public LifeTimeService(DataService dataService)
         {

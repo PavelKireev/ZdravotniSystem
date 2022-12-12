@@ -2,14 +2,25 @@
 
 namespace ZdravotniSystem.Configuration.Data
 {
-    public class DataService
+    public interface IDataService
+    {
+        SQLiteConnection InitDbConnection();
+        RunInitialMigration(SQLiteConnection connection);
+        void CloseDBConnection();
+
+    }
+    public class DataService : IDataService
     {
 
-        private readonly IConfiguration _config;
+        private IConfiguration _config;
 
         public DataService(IConfiguration config)
         {
             _config = config;
+        }
+
+        public DataService()
+        {
         }
 
         public SQLiteConnection InitDbConnection()

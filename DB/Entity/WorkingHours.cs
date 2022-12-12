@@ -1,6 +1,6 @@
 ﻿namespace ZdravotniSystem.DB.Entity
 {
-    public class WorkingHours : AbstractEntity
+    public class WorkingHours : BaseEntity
     {
         public string DayOfWeek { get; set; }
         public int HourFrom { get; set; }

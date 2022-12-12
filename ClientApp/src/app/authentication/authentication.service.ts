@@ -11,7 +11,10 @@ export class AuthenticationService {
   private authChangeSub = new Subject<boolean>()
   public authChanged = this.authChangeSub.asObservable();
 
-  constructor(private http: HttpClient, private envUrl: EnvironmentUrlService, private jwtHelper: JwtHelperService) { }
+  constructor(
+    private http: HttpClient,
+    private envUrl: EnvironmentUrlService,
+    private jwtHelper: JwtHelperService) { }
 
   public registerUser = (route: string, body: UserForRegistrationDto) => {
     return this.http.post<RegistrationResponseDto>(this.createCompleteRoute(route, this.envUrl.urlAddress), body);
@@ -43,7 +46,7 @@ export class AuthenticationService {
   }
 
   public isUserAdmin = (): boolean => {
-    const token = localStorage.getItem("token");
+    const token: any = localStorage.getItem("token");
     const decodedToken = this.jwtHelper.decodeToken(token);
     const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
 

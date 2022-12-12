@@ -6,7 +6,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { NotFoundComponent } from './error-pages/error-pages.component';
+import { NotFoundComponent } from './error-pages/not-found.component';
 import { JwtModule } from '@auth0/angular-jwt';
 
 @NgModule({
@@ -30,8 +30,8 @@ import { JwtModule } from '@auth0/angular-jwt';
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ["localhost:5001"],
-        disallowedRoutesRoutes: []
+        allowedDomains: ["localhost:5001"]
+      //  disallowedRoutesRoutes: []
       }
     })
   ],

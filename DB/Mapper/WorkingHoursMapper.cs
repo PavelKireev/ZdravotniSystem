@@ -1,4 +1,6 @@
-﻿namespace ZdravotniSystem.DB.Mapper
+﻿using ZdravotniSystem.DB.Entity;
+
+namespace ZdravotniSystem.DB.Mapper
 {
     public static class WorkingHoursMapper
     {

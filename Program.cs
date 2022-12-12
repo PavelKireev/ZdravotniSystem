@@ -13,14 +13,6 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddHostedService<LifeTimeService>();
 
-builder.Services.AddSingleton<DataService>();
-builder.Services.AddScoped<JwtHandler>();
-
-
-builder.Services.Add(new ServiceDescriptor(typeof(IAppointmentService), new AppointmentService()));
-builder.Services.Add(new ServiceDescriptor(typeof(IDoctorService), new DoctorService()));
-builder.Services.Add(new ServiceDescriptor(typeof(IPatientService), new PatientService()));
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -36,7 +28,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
-app.MapFallbackToFile("index.html"); ;
+app.MapFallbackToFile("index.html");
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 builder.Services.AddAuthentication(opt =>
@@ -57,6 +49,13 @@ builder.Services.AddAuthentication(opt =>
             .GetBytes(jwtSettings.GetSection("securityKey").Value))
     };
 });
+
+builder.Services.AddSingleton<IDataService>();
+builder.Services.AddScoped<JwtHandler>();
+
+builder.Services.Add(new ServiceDescriptor(typeof(IAppointmentService), new AppointmentService()));
+builder.Services.Add(new ServiceDescriptor(typeof(IDoctorService), new DoctorService()));
+builder.Services.Add(new ServiceDescriptor(typeof(IPatientService), new PatientService()));
 
 app.UseAuthentication();
 app.UseAuthorization();
