@@ -6,7 +6,7 @@ using ZdravotniSystem.Service;
 
 namespace ZdravotniSystem.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/appointment")]
     [ApiController]
     public class AppointmentRestController : ControllerBase
     {

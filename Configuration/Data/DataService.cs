@@ -2,31 +2,13 @@
 
 namespace ZdravotniSystem.Configuration.Data
 {
-    public interface IDataService
+
+    public class DataService
     {
-        SQLiteConnection InitDbConnection();
-        RunInitialMigration(SQLiteConnection connection);
-        void CloseDBConnection();
-
-    }
-    public class DataService : IDataService
-    {
-
-        private IConfiguration _config;
-
-        public DataService(IConfiguration config)
-        {
-            _config = config;
-        }
-
-        public DataService()
-        {
-        }
-
-        public SQLiteConnection InitDbConnection()
+        public static SQLiteConnection InitDbConnection()
         {
             SQLiteConnection connection;
-            string dbName = _config["dbName"];
+            string dbName = "Data source = Objednani.sqlite";
             
 
             if (!System.IO.File.Exists(dbName))
@@ -76,7 +58,12 @@ namespace ZdravotniSystem.Configuration.Data
                 "hour_from INTEGER NOT NULL, " +
                 "hours_count INTEGER NOT NULL, " +
                 "doctor_id INTEGER NOT NULL" +
-                ");";
+                ");" +
+                "CREATE TABLE IF NOT EXISTS user_token (" +
+                "id INTEGER PRIMARY_KEY, " +
+                "key TEXT NOT NULL, " +
+                "value TEXT NOT NULL, " +
+                "exparation_time TEXT NOT NULL";
 
             SQLiteCommand command = new(sql, connection);
             command.ExecuteNonQuery();

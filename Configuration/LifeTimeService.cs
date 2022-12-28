@@ -5,16 +5,9 @@ namespace ZdravotniSystem.Configuration
 {
     public class LifeTimeService : IHostedService
     {
-        public DataService dataService;
-
-        public LifeTimeService(DataService dataService)
-        {
-            this.dataService = dataService;
-        }
-
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            dataService.InitDbConnection();
+            DataService.InitDbConnection();
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)

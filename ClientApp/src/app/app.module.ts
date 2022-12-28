@@ -1,52 +1,46 @@
-import { ErrorHandlerService } from './shared/services/error-handler.service';
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router'
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { NotFoundComponent } from './error-pages/not-found.component';
-import { JwtModule } from '@auth0/angular-jwt';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
+import { JwtModule } from "@auth0/angular-jwt";
+import { AuthGuard } from './guards/auth-guard.service';
+import { NavMenuComponent } from './nav-menu/nav-menu.component';
+
+const routes: Routes = [
+  { path: '', component: HomepageComponent },
+  { path: 'product', component: ProductsComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent },
+];
+
+export function tokenGetter() {
+  return localStorage.getItem("jwt");
+}
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    NotFoundComponent
+    AppointmentComponent,
+    DoctorComponent,
+    NavMenuComponent,
+    PatientComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    BrowserAnimationsModule,
-    RouterModule.forRoot([
-      { path: 'home', component: HomeComponent },
-      //{ path: 'company', loadChildren: () => import('./company/company.module').then(m => m.CompanyModule) },
-      { path: 'authentication', loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule) },
-      { path: '404', component: NotFoundComponent },
-      { path: '', redirectTo: '/home', pathMatch: 'full' },
-      { path: '**', redirectTo: '/404', pathMatch: 'full' }
-    ]),
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule.forRoot(routes),
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ["localhost:5001"]
-      //  disallowedRoutesRoutes: []
+        allowedDomains: ["localhost:7299"],
+        disallowedRoutes: []
       }
-    })
+    }),
   ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ErrorHandlerService,
-      multi: true
-    }
-  ],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-
-export function tokenGetter() {
-  return localStorage.getItem("token");
-}

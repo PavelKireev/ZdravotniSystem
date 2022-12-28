@@ -13,7 +13,9 @@
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="6.0.10" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.116" />
   </ItemGroup>
 
@@ -25,17 +27,26 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\appointment\appointment.component.ts" />
+    <None Remove="ClientApp\src\app\doctor\patient.component.ts" />
     <None Remove="ClientApp\src\app\error-pages\not-found.component.ts" />
+    <None Remove="ClientApp\src\app\guards\auth-guard.service.ts" />
+    <None Remove="ClientApp\src\app\model\homepage.component.ts" />
+    <None Remove="ClientApp\src\app\model\product.conponent.ts" />
+    <None Remove="ClientApp\src\app\service\products.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\app\_interface\response\" />
     <Folder Include="Validator\" />
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\app\authentication\authentication.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\appointment\appointment.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\patient\patient.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\error-pages\not-found.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\guards\auth-guard.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\model\homepage\homepage.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\service\products.service.ts" />
   </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

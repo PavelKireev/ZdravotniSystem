@@ -1,19 +1,17 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand" [routerLink]="['/home']" routerLinkActive="active"
-       [routerLinkActiveOptions]="{exact: true}">Account-Owner Home</a>
-    <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed"
-            [attr.aria-expanded]="!isCollapsed" aria-controls="collapseNav">
+       [routerLinkActiveOptions]="{exact: true}">Zdravotni System</a>
+    <button class="navbar-toggler" type="button">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="collapseNav" [collapse]="!isCollapsed" [isAnimated]="true">
+    <div class="collapse navbar-collapse" id="collapseNav">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/company/companies']" routerLinkActive="active"
-             [routerLinkActiveOptions]="{exact: true}">Companies </a>
+          <a class="nav-link" (click)="patientsTable($event)">Patients</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Privacy </a>
+          <a class="nav-link" href="#">Privacy</a>
         </li>
       </ul>
       <form class="d-flex">

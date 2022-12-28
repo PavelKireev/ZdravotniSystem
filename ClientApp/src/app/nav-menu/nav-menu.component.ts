@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '../authentication/authentication.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -12,21 +11,29 @@ export class NavMenuComponent {
   isUserAuthenticated: boolean;
 
   constructor(
-    private authService: AuthenticationService,
+    //private authService: AuthenticationService,
     private router: Router
   ) {
     this.isUserAuthenticated = false;
   }
 
   ngOnInit(): void {
-    this.authService.authChanged
-      .subscribe(res => {
-        this.isUserAuthenticated = res;
-      })
+    //this.authService.authChanged
+    //  .subscribe(res => {
+    //    this.isUserAuthenticated = res;
+    //  })
   }
 
   public logout = () => {
-    this.authService.logout();
-    this.router.navigate(["/"]);
+    //this.authService.logout();
+    //this.router.navigate(["/"]);
+  }
+
+  public patientsTable($event: any) {
+    console.log("clicked", $event);
+  }
+
+  public appointmentsTable($event: any) {
+
   }
 }

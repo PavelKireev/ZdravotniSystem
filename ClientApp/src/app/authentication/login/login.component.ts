@@ -1,1 +1,42 @@
-import { HttpErrorResponse } from '@angular/common/http'; import { Component, OnInit } from '@angular/core'; import { FormGroup, FormControl, Validators } from '@angular/forms'; import { ActivatedRoute, Router } from '@angular/router'; import {   AuthenticationService,   AuthResponseDto,   UserForAuthenticationDto } from '../authentication.service';   @Component({   selector: 'app-login',   templateUrl: './login.component.html',   styleUrls: ['./login.component.css'] }) export class LoginComponent implements OnInit {    returnUrl?: string;    errorMessage: string = '';   showError?: boolean;     constructor(     private authService: AuthenticationService,     private router: Router,     private route: ActivatedRoute,     private loginForm: FormGroup   ) { }    ngOnInit(): void {     this.loginForm = new FormGroup({       username: new FormControl("", [Validators.required]),       password: new FormControl("", [Validators.required])     })     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';   }   validateControl = (controlName: string) => {     return this.loginForm.get(controlName)?.invalid && this.loginForm?.get(controlName)?.touched   }   hasError = (controlName: string, errorName: string) => {     return this.loginForm.get(controlName)?.hasError(errorName)   }    loginUser = (loginFormValue: any) => {     this.showError = false;     const login = { ...loginFormValue };     const userForAuth: UserForAuthenticationDto = {       email: login.username,       password: login.password     }     this.authService.loginUser('api/accounts/login', userForAuth)       .subscribe({         next: (res: AuthResponseDto) => {           localStorage.setItem("token", res.token);           this.router.navigate([this.returnUrl]);         },         error: (err: HttpErrorResponse) => {           this.errorMessage = err.message;           this.showError = true;         }       })   } } 
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { Router } from "@angular/router";
+import { NgForm } from '@angular/forms';
+import configurl from '../../../assets/config/config.json';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { ToastrService } from 'ngx-toastr';
+@Component({
+  selector: 'login',
+  templateUrl: './login.component.html'
+})
+export class LoginComponent {
+  invalidLogin?: boolean;
+  url = configurl.apiServer.url + '/api/authentication/';
+  constructor(private router: Router, private http: HttpClient, private jwtHelper: JwtHelperService,
+    private toastr: ToastrService) { }
+  public login = (form: NgForm) => {
+    const credentials = JSON.stringify(form.value);
+    this.http.post(this.url + "login", credentials, {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json"
+      })
+    }).subscribe(response => {
+      const token = (<any>response).token;
+      localStorage.setItem("jwt", token);
+      this.invalidLogin = false;
+      this.toastr.success("Logged In successfully");
+      this.router.navigate(["/product"]);
+    }, err => {
+      this.invalidLogin = true;
+    });
+  }
+  isUserAuthenticated() {
+    const token = localStorage.getItem("jwt");
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+}
