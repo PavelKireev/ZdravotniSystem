@@ -7,11 +7,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { JwtModule } from "@auth0/angular-jwt";
 import { AuthGuard } from './guards/auth-guard.service';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { AppointmentComponent } from './appointment/appointment.component';
+import { DoctorComponent } from './doctor/doctor.component';
+import { PatientComponent } from './patient/patient.component';
 
 const routes: Routes = [
-  { path: '', component: HomepageComponent },
-  { path: 'product', component: ProductsComponent, canActivate: [AuthGuard] },
-  { path: 'login', component: LoginComponent },
+  { path: '', component: AppComponent },
+  { path: 'appointment', component: AppointmentComponent, canActivate: [AuthGuard] },
+  { path: 'doctor', component: DoctorComponent },
+  { path: 'patient', component: PatientComponent }
 ];
 
 export function tokenGetter() {
