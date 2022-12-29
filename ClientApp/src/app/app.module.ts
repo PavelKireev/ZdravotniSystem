@@ -10,12 +10,16 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { AppointmentComponent } from './appointment/appointment.component';
 import { DoctorComponent } from './doctor/doctor.component';
 import { PatientComponent } from './patient/patient.component';
+import { HomepageComponent } from './homepage/homepage.component';
+import { LoginComponent } from './authentication/login/login.component';
+import { RegisterUserComponent } from './authentication/register-user/register-user.component';
 
 const routes: Routes = [
-  { path: '', component: AppComponent },
+  { path: '', component: HomepageComponent },
   { path: 'appointment', component: AppointmentComponent, canActivate: [AuthGuard] },
-  { path: 'doctor', component: DoctorComponent },
-  { path: 'patient', component: PatientComponent }
+  { path: 'doctor', component: DoctorComponent, canActivate: [AuthGuard] },
+  { path: 'patient', component: PatientComponent, canActivate: [AuthGuard] },
+  { path: 'registration', component: RegisterUserComponent }
 ];
 
 export function tokenGetter() {
@@ -27,8 +31,11 @@ export function tokenGetter() {
     AppComponent,
     AppointmentComponent,
     DoctorComponent,
+    HomepageComponent,
+    LoginComponent,
     NavMenuComponent,
-    PatientComponent
+    PatientComponent,
+    RegisterUserComponent
   ],
   imports: [
     BrowserModule,

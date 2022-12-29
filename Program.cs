@@ -92,7 +92,6 @@ app.MapControllerRoute(
 
 app.MapFallbackToFile("index.html");
 
-app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

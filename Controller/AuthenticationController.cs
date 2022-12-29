@@ -5,18 +5,27 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using ZdravotniSystem.Model;
+using ZdravotniSystem.Service;
 
 namespace ZdravotniSystem.Controller
 {
-    [Route("api/login")]
+    [Route("api/authentication")]
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
 
         public readonly IConfiguration configuration;
+        public readonly PatientService patientService;
+
+        public AuthenticationController(
+            IConfiguration configuration
+        ) {
+            this.configuration = configuration;
+            this.patientService = patientService;
+        }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] Login user)
+        public IActionResult Login([FromBody] LoginModel user)
         {
             if (user is null)
             {
@@ -40,9 +49,21 @@ namespace ZdravotniSystem.Controller
                     signingCredentials: signinCredentials
                 );
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-                return Ok(new JWTTokenResponse { Token = tokenString });
+                return Ok(new JwtTokenResponseDto { Token = tokenString });
             }
             return Unauthorized();
+        }
+
+        [HttpPost("sign-up")]
+        public IActionResult SignUp([FromBody] RegistrationModel model) {
+            if (model != null)
+            {
+                patientService.registerPatient(model);
+                return Ok();
+            }
+
+            return BadRequest();
+            
         }
     }
 }

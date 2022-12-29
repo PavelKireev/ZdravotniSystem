@@ -31,8 +31,6 @@
     <None Remove="ClientApp\src\app\doctor\patient.component.ts" />
     <None Remove="ClientApp\src\app\error-pages\not-found.component.ts" />
     <None Remove="ClientApp\src\app\guards\auth-guard.service.ts" />
-    <None Remove="ClientApp\src\app\model\homepage.component.ts" />
-    <None Remove="ClientApp\src\app\model\product.conponent.ts" />
     <None Remove="ClientApp\src\app\service\products.service.ts" />
   </ItemGroup>
 
@@ -45,7 +43,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\patient\patient.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\error-pages\not-found.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\guards\auth-guard.service.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\model\homepage\homepage.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\homepage\homepage.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\service\products.service.ts" />
   </ItemGroup>
 

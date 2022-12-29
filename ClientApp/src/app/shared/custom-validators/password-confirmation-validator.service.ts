@@ -6,12 +6,10 @@ import { AbstractControl, ValidatorFn } from '@angular/forms';
 })
 export class PasswordConfirmationValidatorService {
 
-  constructor() { }
-
-  public validateConfirmPassword = (passwordControl: AbstractControl): ValidatorFn => {
+  public validateConfirmPassword = (passwordControl: AbstractControl | null): ValidatorFn => {
     return (confirmationControl: AbstractControl): { [key: string]: boolean } | null => {
       const confirmValue = confirmationControl.value;
-      const passwordValue = passwordControl.value;
+      const passwordValue = passwordControl?.value;
       if (confirmValue === '') {
         return null;
       }
