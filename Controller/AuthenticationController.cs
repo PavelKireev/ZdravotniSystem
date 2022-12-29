@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using ZdravotniSystem.DB.Entity;
+using ZdravotniSystem.DB.Repository;
 using ZdravotniSystem.Model;
 using ZdravotniSystem.Service;
 
@@ -14,38 +17,46 @@ namespace ZdravotniSystem.Controller
     public class AuthenticationController : ControllerBase
     {
 
-        public readonly IConfiguration configuration;
-        public readonly PatientService patientService;
+        private readonly IConfiguration _configuration;
+        private readonly IUserRepository _userRepository;
+        private readonly IPatientService _patientService;
 
         public AuthenticationController(
-            IConfiguration configuration
+            IConfiguration configuration,
+            IUserRepository userRepository,
+            IPatientService patientService
         ) {
-            this.configuration = configuration;
-            this.patientService = patientService;
+            _configuration = configuration;
+            _userRepository = userRepository;
+            _patientService = patientService;
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginModel user)
+        public IActionResult Login([FromBody] LoginModel model)
         {
-            if (user is null)
+            if (model is null)
             {
                 return BadRequest("Invalid user request!!!");
             }
-            if (user.UserName == "Jaydeep" && user.Password == "Pass@777")
+
+            User user = _userRepository.GetOneByEmail(model.UserName);
+
+
+            if (model.UserName.Equals(user.Email) && BCrypt.Net.BCrypt.Verify(model.Password, user.Password))
             {
                 var tokenClaims = new[] {
-                    new Claim(ClaimTypes.Email, user.UserName),
+                    new Claim(ClaimTypes.Email, user.Email),
                     new Claim(ClaimTypes.Role, "PATIENT")
                 }; 
 
-                var jwtSettings = configuration.GetSection("JwtSettings");
+                var jwtSettings = _configuration.GetSection("JwtSettings");
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["securityKey"]));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
                 var tokenOptions = new JwtSecurityToken(
                     issuer: jwtSettings["validIssuer"],
                     audience: jwtSettings["validAudience"],
                     claims: tokenClaims,
-                    expires: DateTime.Now.AddMinutes(6),
+                    expires: DateTime.Now.AddMinutes(60),
                     signingCredentials: signinCredentials
                 );
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);

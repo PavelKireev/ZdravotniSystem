@@ -9,10 +9,7 @@ namespace ZdravotniSystem.Service
 
     public class AppointmentService : IAppointmentService
     {
-
         private readonly ILogger<AppointmentService> _logger;
-
-
     }
 
 }

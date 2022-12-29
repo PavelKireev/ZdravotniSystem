@@ -1,4 +1,6 @@
 ﻿using ZdravotniSystem.Controllers;
+using ZdravotniSystem.DB.Entity;
+using ZdravotniSystem.DB.Repository;
 using ZdravotniSystem.Model;
 using ZdravotniSystem.Repository;
 
@@ -12,6 +14,7 @@ namespace ZdravotniSystem.Service
     public class PatientService : IPatientService
     {
         private readonly ILogger<PatientService> _logger;
+        private readonly IUserRepository _userRepository;
         private readonly PatientRepository repository;
 
         public PatientService(
@@ -23,12 +26,16 @@ namespace ZdravotniSystem.Service
         }
 
         public void registerPatient(RegistrationModel model) {
-            repository.Save(new DB.Entity.Patient
+            Patient patient = new()
             {
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                Email= model.Email
-            });
+                Email = model.Email,
+                Password = model.Password,
+
+            };
+            _userRepository.Save(patient, "PATIENT");
+            repository.Save(patient);
         }
     }
 }

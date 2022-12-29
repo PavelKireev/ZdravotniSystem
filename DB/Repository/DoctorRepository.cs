@@ -47,7 +47,7 @@ namespace ZdravotniSystem.Repository
 
             cmd.CommandText =
                 string
-                    .Format(
+                    .Format( 
                         "INSERT OR REPLACE INTO doctor (" +
                         "first_name, last_name, email, office_number" +
                         ") VALUES('{0}', '{1}', '{2}', {3} );",

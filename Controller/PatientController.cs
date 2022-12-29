@@ -1,50 +1,46 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Runtime.ConstrainedExecution;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ZdravotniSystem.Service;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ZdravotniSystem.Controllers
 {
-    [Route("api/appointment")]
-    [ApiController]
-    public class AppointmentRestController : ControllerBase
+    [Route("api/patient")]
+    [ApiController, Authorize]
+    public class PatientController : ControllerBase
     {
-        private readonly IAppointmentService _appointmentService;
 
-        public AppointmentRestController(IAppointmentService appointmentService)
+        private readonly IPatientService _patientService;
+
+        public PatientController(IPatientService patientService)
         {
-            this._appointmentService = appointmentService;
+            this._patientService = patientService;
         }
 
 
-        // GET: api/<AppointmentRestController>
         [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<AppointmentRestController>/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/<AppointmentRestController>
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/<AppointmentRestController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<AppointmentRestController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
