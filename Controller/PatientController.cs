@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ZdravotniSystem.DB.Entity;
 using ZdravotniSystem.Service;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -20,12 +21,12 @@ namespace ZdravotniSystem.Controllers
 
 
         [HttpGet]
-        public IEnumerable<string> Get()
+        public List<Patient> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _patientService.GetPatients();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("patient/{email}")]
         public string Get(string email)
         {
             return "value";

@@ -6,7 +6,9 @@ using ZdravotniSystem.DB.Repository;
 
 namespace ZdravotniSystem.Repository
 {
-    public interface IDoctorRepository : IRepository<Doctor> { }
+    public interface IDoctorRepository : IRepository<Doctor> {
+        Doctor GetOneByEmail(string email);
+    }
 
     public class DoctorRepository : AbstractRepository, IDoctorRepository
     {
@@ -84,6 +86,22 @@ namespace ZdravotniSystem.Repository
                     );
 
             cmd.ExecuteNonQuery();
+        }
+
+        public Doctor GetOneByEmail(string email)
+        {
+            SQLiteCommand cmd = new(Connection);
+
+            cmd.CommandText = string.Format("SELECT * FROM users INNER JOIN doctor USING(email) WHERE email = {0} ;", email);
+            cmd.CommandType = CommandType.Text;
+
+            SQLiteDataReader reader = cmd.ExecuteReader();
+
+            //TODO: rework mapper
+            if (reader.Read())
+                return DoctorMapper.Map(reader);
+
+            return new Doctor();
         }
     }
 }

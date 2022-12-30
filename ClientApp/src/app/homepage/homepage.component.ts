@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { mergeMap } from 'rxjs';
+import configurl from '../../assets/config/config.json';
 
 @Component({
   selector: 'hompage-component',
@@ -11,6 +11,7 @@ import { mergeMap } from 'rxjs';
 })
 export class HomepageComponent {
 
+  @Output()
   public tableList?: User[];
 
   constructor(
@@ -18,6 +19,10 @@ export class HomepageComponent {
     private httpClient: HttpClient,
     private router: Router
   ) { }
+
+  ngOnInit(): void{
+    this.fillTable();
+  }
 
   isUserAuthenticated(): boolean {
     const token = localStorage.getItem("jwt");
@@ -30,9 +35,15 @@ export class HomepageComponent {
   }
 
   fillTable(): void {
-    this.httpClient.get<User[]>("aw").subscribe(
-      (users: User[]) => this.tableList = users
+    this.httpClient.get<User[]>(configurl.apiServer.url + "/api/patient").subscribe(
+      (users: User[]) => {
+        this.tableList = users;
+        users.forEach(
+          (u) => console.log(u.firstName + " " + u.lastName)
+        );
+      }
     );
+    console.log(this.tableList?.toString());
   }
 
   public logOut = () => {
@@ -41,6 +52,6 @@ export class HomepageComponent {
 }
 
 export interface User {
-  FirstName: string;
-  LastName: string;
+  firstName: string;
+  lastName: string;
 }

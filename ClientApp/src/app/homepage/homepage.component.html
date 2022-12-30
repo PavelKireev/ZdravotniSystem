@@ -1,8 +1,23 @@
-  <div *ngIf="!isUserAuthenticated()">
-    <login></login>
-  </div>
-  <div *ngIf="isUserAuthenticated()" style="color:green;">
-    <h2>
-      Welcome to the Product Application
-    </h2>
-  </div>
+<div *ngIf="!isUserAuthenticated()">
+  <login></login>
+</div>
+<div *ngIf="isUserAuthenticated()" style="color:green;">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let user of tableList; let i = index">
+      <tr>
+        <th scope="row">{{i + 1}}</th>
+        <td>{{user.firstName}}</td>
+        <td>{{user.lastName}}</td>
+        <td>@mdo</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

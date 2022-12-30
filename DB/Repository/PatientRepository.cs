@@ -7,7 +7,9 @@ using ZdravotniSystem.DB.Repository;
 namespace ZdravotniSystem.Repository
 {
 
-    public interface IPatientRepository : IRepository<Patient> { }
+    public interface IPatientRepository : IRepository<Patient> { 
+        Patient GetOneByEmail(string email);
+    }
     public class PatientRepository : AbstractRepository, IPatientRepository
     {
         public Patient GetOne(int id)
@@ -46,7 +48,7 @@ namespace ZdravotniSystem.Repository
 
             SQLiteCommand cmd = Connection.CreateCommand();
 
-            cmd.CommandText = "SELECT DISTINCT * FROM patient";
+            cmd.CommandText = "SELECT DISTINCT * FROM patient INNER JOIN users USING(email);";
             cmd.CommandType = CommandType.Text;
             SQLiteDataReader r = cmd.ExecuteReader();
             while (r.Read())

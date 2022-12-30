@@ -8,7 +8,8 @@ namespace ZdravotniSystem.Service
 {
     public interface IPatientService
     {
-        void registerPatient(RegistrationModel model);
+        void RegisterPatient(RegistrationModel model);
+        List<Patient> GetPatients();
     }
 
     public class PatientService : IPatientService
@@ -25,7 +26,12 @@ namespace ZdravotniSystem.Service
             _userRepository = userRepository;
         }
 
-        public void registerPatient(RegistrationModel model) {
+        public List<Patient> GetPatients()
+        {
+            return _repository.FindAll();
+        }
+
+        public void RegisterPatient(RegistrationModel model) {
             Patient patient = new()
             {
                 FirstName = model.FirstName,
@@ -36,6 +42,9 @@ namespace ZdravotniSystem.Service
             };
             _userRepository.Save(patient, "PATIENT");
             _repository.Save(patient);
+            _logger.LogInformation("Patient {} successfully registered.", model.Email);
         }
+
+
     }
 }

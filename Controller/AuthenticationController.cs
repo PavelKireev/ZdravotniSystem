@@ -82,7 +82,7 @@ namespace ZdravotniSystem.Controller
 
             if (validationResult.IsValid)
             {
-                _patientService.registerPatient(model);
+                _patientService.RegisterPatient(model);
                 return Ok();
             }
             else
