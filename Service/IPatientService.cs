@@ -14,15 +14,15 @@ namespace ZdravotniSystem.Service
     public class PatientService : IPatientService
     {
         private readonly ILogger<PatientService> _logger;
-        private readonly IUserRepository _userRepository;
-        private readonly PatientRepository repository;
 
-        public PatientService(
-            ILogger<PatientService> logger, 
-            PatientRepository repository
-        ) {
+        private readonly IPatientRepository _repository;
+        private readonly IUserRepository _userRepository;
+
+        public PatientService(ILogger<PatientService> logger, IPatientRepository repository, IUserRepository userRepository)
+        {
             _logger = logger;
-            this.repository = repository;
+            _repository = repository;
+            _userRepository = userRepository;
         }
 
         public void registerPatient(RegistrationModel model) {
@@ -35,7 +35,7 @@ namespace ZdravotniSystem.Service
 
             };
             _userRepository.Save(patient, "PATIENT");
-            repository.Save(patient);
+            _repository.Save(patient);
         }
     }
 }

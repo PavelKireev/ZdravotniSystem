@@ -6,7 +6,9 @@ using ZdravotniSystem.DB.Repository;
 
 namespace ZdravotniSystem.Repository
 {
-    public class DoctorRepository : AbstractRepository, IRepository<Doctor>
+    public interface IDoctorRepository : IRepository<Doctor> { }
+
+    public class DoctorRepository : AbstractRepository, IDoctorRepository
     {
         public Doctor GetOne(int id)
         {

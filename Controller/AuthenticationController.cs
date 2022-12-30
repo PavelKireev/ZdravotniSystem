@@ -9,6 +9,7 @@ using ZdravotniSystem.DB.Entity;
 using ZdravotniSystem.DB.Repository;
 using ZdravotniSystem.Model;
 using ZdravotniSystem.Service;
+using ZdravotniSystem.Validator;
 
 namespace ZdravotniSystem.Controller
 {
@@ -21,14 +22,19 @@ namespace ZdravotniSystem.Controller
         private readonly IUserRepository _userRepository;
         private readonly IPatientService _patientService;
 
+        private readonly IRegistrationModelValidator _registrationModelValidator;
+
         public AuthenticationController(
             IConfiguration configuration,
             IUserRepository userRepository,
-            IPatientService patientService
-        ) {
+            IPatientService patientService,
+            IRegistrationModelValidator registrationModelValidator
+        )
+        {
             _configuration = configuration;
             _userRepository = userRepository;
             _patientService = patientService;
+            _registrationModelValidator = registrationModelValidator;
         }
 
         [HttpPost("login")]
@@ -41,13 +47,12 @@ namespace ZdravotniSystem.Controller
 
             User user = _userRepository.GetOneByEmail(model.UserName);
 
-
             if (model.UserName.Equals(user.Email) && BCrypt.Net.BCrypt.Verify(model.Password, user.Password))
             {
                 var tokenClaims = new[] {
                     new Claim(ClaimTypes.Email, user.Email),
                     new Claim(ClaimTypes.Role, "PATIENT")
-                }; 
+                };
 
                 var jwtSettings = _configuration.GetSection("JwtSettings");
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["securityKey"]));
@@ -66,15 +71,24 @@ namespace ZdravotniSystem.Controller
         }
 
         [HttpPost("sign-up")]
-        public IActionResult SignUp([FromBody] RegistrationModel model) {
-            if (model != null)
+        public IActionResult SignUp([FromBody] RegistrationModel model)
+        {
+            if (model == null)
             {
-                patientService.registerPatient(model);
-                return Ok();
+                return BadRequest();
             }
 
-            return BadRequest();
-            
+            ValidationResult validationResult = _registrationModelValidator.Validate(model);
+
+            if (validationResult.IsValid)
+            {
+                _patientService.registerPatient(model);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(validationResult.Message);
+            }
         }
     }
 }

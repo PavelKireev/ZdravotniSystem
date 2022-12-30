@@ -1,6 +1,7 @@
 ﻿using ZdravotniSystem.Controllers;
 using ZdravotniSystem.DB.Entity;
 using ZdravotniSystem.DB.Repository;
+using ZdravotniSystem.Repository;
 
 namespace ZdravotniSystem.Service
 {
@@ -12,12 +13,10 @@ namespace ZdravotniSystem.Service
     public class DoctorService : IDoctorService
     {
         private readonly ILogger<DoctorService> _logger;
-        private readonly IRepository<Doctor> _doctorRepository;
+        private readonly IDoctorRepository _doctorRepository;
 
-        public DoctorService(
-            ILogger<DoctorService> logger,
-            IRepository<Doctor> doctorRepository
-        ) {
+        public DoctorService(ILogger<DoctorService> logger, IDoctorRepository doctorRepository)
+        {
             _logger = logger;
             _doctorRepository = doctorRepository;
         }

@@ -33,10 +33,10 @@ namespace ZdravotniSystem.Configuration.Data
                 "CREATE TABLE IF NOT EXISTS users (" + 
                 "id INTEGER PRIMARY KEY, " + 
                 "first_name TEXT NOT NULL, " + 
-                "last_name TEXT NOT NULL," + 
-                "email TEXT NOT NULL UNIQUE," + 
-                "password TEXT NOT NULL," + 
-                "role TEXT NOT NULL," + 
+                "last_name TEXT NOT NULL, " + 
+                "email TEXT NOT NULL UNIQUE, " + 
+                "password TEXT NOT NULL, " + 
+                "role TEXT NOT NULL " + 
                 "); " + 
                 "CREATE TABLE IF NOT EXISTS appointment (" + 
                 "id INTEGER PRIMARY KEY, " + 
@@ -64,7 +64,7 @@ namespace ZdravotniSystem.Configuration.Data
                 "doctor_id INTEGER NOT NULL" + 
                 ");" + 
                 "CREATE TABLE IF NOT EXISTS user_token (" + 
-                "id INTEGER PRIMARY_KEY, " + 
+                "id INTEGER PRIMARY KEY, " + 
                 "key TEXT NOT NULL, " + 
                 "value TEXT NOT NULL, " + 
                 "exparation_time TEXT NOT NULL " +

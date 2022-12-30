@@ -35,10 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Validator\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\appointment\appointment.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\patient\patient.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\error-pages\not-found.component.ts" />

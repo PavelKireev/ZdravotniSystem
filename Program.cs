@@ -5,7 +5,11 @@ using System.Text;
 using ZdravotniSystem.Configuration;
 using ZdravotniSystem.Configuration.Data;
 using ZdravotniSystem.Configuration.Security;
+using ZdravotniSystem.DB.Entity;
+using ZdravotniSystem.DB.Repository;
+using ZdravotniSystem.Repository;
 using ZdravotniSystem.Service;
+using ZdravotniSystem.Validator;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,9 +51,17 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddHostedService<LifeTimeService>();
 
-builder.Services.Add(new ServiceDescriptor(typeof(IAppointmentService), new AppointmentService()));
-builder.Services.Add(new ServiceDescriptor(typeof(IDoctorService), new DoctorService()));
-builder.Services.Add(new ServiceDescriptor(typeof(IPatientService), new PatientService()));
+builder.Services.AddScoped<IAppointmentService, AppointmentService>();
+builder.Services.AddScoped<IDoctorService, DoctorService>();
+builder.Services.AddScoped<IPatientService, PatientService>();
+
+builder.Services.AddSingleton<IUserRepository, UserRepository>();
+
+builder.Services.AddSingleton<IAppointmentRepository, AppointmentRepository>();
+builder.Services.AddSingleton<IDoctorRepository, DoctorRepository>();
+builder.Services.AddSingleton<IPatientRepository, PatientRepository>();
+
+builder.Services.AddSingleton<IRegistrationModelValidator, RegistrationModelValidator>();
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 builder.Services.AddAuthentication(opt =>

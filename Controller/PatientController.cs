@@ -26,7 +26,7 @@ namespace ZdravotniSystem.Controllers
         }
 
         [HttpGet("{id}")]
-        public string Get(int id)
+        public string Get(string email)
         {
             return "value";
         }
@@ -37,7 +37,7 @@ namespace ZdravotniSystem.Controllers
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put([FromBody] string value)
         {
         }
 

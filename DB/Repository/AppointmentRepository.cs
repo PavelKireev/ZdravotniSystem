@@ -6,7 +6,10 @@ using ZdravotniSystem.DB.Repository;
 
 namespace ZdravotniSystem.Repository
 {
-    public class AppointmentRepository : AbstractRepository, IRepository<Appointment>
+
+    public interface IAppointmentRepository : IRepository<Appointment> { }
+
+    public class AppointmentRepository : AbstractRepository, IAppointmentRepository
     {
         public Appointment GetOne(int id)
         {

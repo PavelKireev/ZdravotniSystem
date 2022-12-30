@@ -19,7 +19,8 @@ const routes: Routes = [
   { path: 'appointment', component: AppointmentComponent, canActivate: [AuthGuard] },
   { path: 'doctor', component: DoctorComponent, canActivate: [AuthGuard] },
   { path: 'patient', component: PatientComponent, canActivate: [AuthGuard] },
-  { path: 'registration', component: RegisterUserComponent }
+  { path: 'registration', component: RegisterUserComponent },
+  { path: 'login', component: LoginComponent }
 ];
 
 export function tokenGetter() {

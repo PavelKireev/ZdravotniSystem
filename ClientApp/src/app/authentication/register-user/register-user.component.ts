@@ -1,8 +1,9 @@
 import { Router } from '@angular/router';
 import { PasswordConfirmationValidatorService } from './../../shared/custom-validators/password-confirmation-validator.service';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import configurl from '../../../assets/config/config.json';
 
 @Component({
   selector: 'app-register-user',
@@ -19,6 +20,8 @@ export class RegisterUserComponent implements OnInit {
     private passConfValidator: PasswordConfirmationValidatorService,
     private httpClient: HttpClient
   ) { }
+
+  url = configurl.apiServer.url + '/api/authentication/';
 
   ngOnInit(): void {
     this.registerForm = new FormGroup({
@@ -51,9 +54,12 @@ export class RegisterUserComponent implements OnInit {
       confirmPassword: formValues.confirm
     };
 
-    this.httpClient.post("api/accounts/registration", JSON.stringify(user))
-      .subscribe({
-        next: (_) => this.router.navigate(["/authentication/login"]),
+    this.httpClient.post(this.url + "sign-up", JSON.stringify(user), {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json"
+      })
+    }).subscribe({
+        next: (_) => this.router.navigate(["login"]),
         error: (err: HttpErrorResponse) => {
           this.errorMessage = err.message;
           this.showError = true;

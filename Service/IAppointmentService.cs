@@ -1,4 +1,5 @@
 ﻿using ZdravotniSystem.Controllers;
+using ZdravotniSystem.Repository;
 
 namespace ZdravotniSystem.Service
 {
@@ -10,6 +11,13 @@ namespace ZdravotniSystem.Service
     public class AppointmentService : IAppointmentService
     {
         private readonly ILogger<AppointmentService> _logger;
+        private readonly IAppointmentRepository _appointmetRepository;
+
+        public AppointmentService(ILogger<AppointmentService> logger, IAppointmentRepository appointmetRepository)
+        {
+            _logger = logger;
+            _appointmetRepository = appointmetRepository;
+        }
     }
 
 }
