@@ -10,6 +10,7 @@ namespace ZdravotniSystem.Service
     {
         void RegisterPatient(RegistrationModel model);
         List<Patient> GetPatients();
+        Patient GetPatientByEmail(string email);
     }
 
     public class PatientService : IPatientService
@@ -24,6 +25,11 @@ namespace ZdravotniSystem.Service
             _logger = logger;
             _repository = repository;
             _userRepository = userRepository;
+        }
+
+        public Patient GetPatientByEmail(string email)
+        {
+            return _repository.GetOneByEmail(email);
         }
 
         public List<Patient> GetPatients()

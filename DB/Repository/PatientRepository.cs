@@ -27,11 +27,11 @@ namespace ZdravotniSystem.Repository
             return new Patient();
         }
 
-        public Patient GetOneByEmail(string email)
+        public Patient? GetOneByEmail(string email)
         {
             SQLiteCommand cmd = new(Connection);
 
-            cmd.CommandText = string.Format("SELECT * FROM user INNER JOIN patient USING(email) WHERE email = {0} ;", email);
+            cmd.CommandText = string.Format("SELECT * FROM patient INNER JOIN users USING(email) WHERE email = '{0}' ;", email);
             cmd.CommandType = CommandType.Text;
 
             SQLiteDataReader reader = cmd.ExecuteReader();
@@ -39,7 +39,7 @@ namespace ZdravotniSystem.Repository
             if (reader.Read())
                 return PatientMapper.Map(reader);
 
-            return new Patient();
+            return default;
         }
 
         public List<Patient> FindAll()

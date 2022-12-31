@@ -46,6 +46,29 @@ export class HomepageComponent {
     console.log(this.tableList?.toString());
   }
 
+  public moreInfo($event: any, email: string, role: string): void {
+    switch (role) {
+      case "PATIENT":
+        this.router.navigate(["patient", { email: email }])
+        break;
+      case "DOCTOR":
+        this.router.navigate(["doctor", email])
+        break;
+      case "ADMIN":
+        this.router.navigate(["admin", email])
+        break;
+    }
+  }
+
+  public delete($event: any, email: string): void {
+    this.httpClient.delete(
+      configurl.apiServer.url + "/api/patient/delete?email=" + email
+    ).subscribe(
+      _ => this.tableList = this.tableList?.filter(user => user.email !== email),
+      error => console.log("User delete error.")
+    );
+  }
+
   public logOut = () => {
     localStorage.removeItem("jwt");
   }
@@ -54,4 +77,6 @@ export class HomepageComponent {
 export interface User {
   firstName: string;
   lastName: string;
+  email: string;
+  role: string;
 }

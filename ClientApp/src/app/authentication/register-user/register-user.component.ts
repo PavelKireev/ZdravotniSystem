@@ -59,12 +59,12 @@ export class RegisterUserComponent implements OnInit {
         "Content-Type": "application/json"
       })
     }).subscribe({
-        next: (_) => this.router.navigate(["login"]),
-        error: (err: HttpErrorResponse) => {
-          this.errorMessage = err.message;
-          this.showError = true;
-        }
-      })
+      next: (_) => this.router.navigate(["login"]),
+      error: (err: HttpErrorResponse) => {
+        this.errorMessage = err.message;
+        this.showError = true;
+      }
+    });
   }
 }
 

@@ -47,7 +47,7 @@ namespace ZdravotniSystem.Controller
 
             User user = _userRepository.GetOneByEmail(model.UserName);
 
-            if (model.UserName.Equals(user.Email) && BCrypt.Net.BCrypt.Verify(model.Password, user.Password))
+            if (user != null && model.UserName.Equals(user.Email) && BCrypt.Net.BCrypt.Verify(model.Password, user.Password))
             {
                 var tokenClaims = new[] {
                     new Claim(ClaimTypes.Email, user.Email),

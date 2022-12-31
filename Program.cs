@@ -22,7 +22,7 @@ builder.Services.AddSwaggerGen(options =>
     {
         Version = "V1",
         Title = "Zdravotni System",
-        Description = "Product Zdravotni System"
+        Description = "Zdravotni System"
     });
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -90,7 +90,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
-        options.SwaggerEndpoint("/swagger/V1/swagger.json", "Product WebAPI");
+        options.SwaggerEndpoint("/swagger/V1/swagger.json", "Zdravotni System WebAPI");
     });
 }
 

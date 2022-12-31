@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ZdravotniSystem.DB.Entity;
+using ZdravotniSystem.Model;
 using ZdravotniSystem.Service;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -26,25 +27,21 @@ namespace ZdravotniSystem.Controllers
             return _patientService.GetPatients();
         }
 
-        [HttpGet("patient/{email}")]
-        public string Get(string email)
+        [HttpGet("patient")]
+        public Patient Get(string email)
         {
-            return "value";
+            return _patientService.GetPatientByEmail(email);
         }
 
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        [HttpPut("{id}")]
-        public void Put([FromBody] string value)
+        [HttpPost("update")]
+        public void Post([FromBody] PatientModel value)
         {
         }
 
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("delete")]
+        public void Delete(string email)
         {
+
         }
     }
 }
