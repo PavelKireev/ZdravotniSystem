@@ -25,15 +25,17 @@ namespace ZdravotniSystem.Controller
         }
 
         [HttpPost("create")]
-        public void Post([FromBody] WorkingHours value)
+        public List<WorkingHours> Post([FromBody] WorkingHours value, int doctorId)
         {
             _workingHoursService.Create(value);
+            return _workingHoursService.GetWorkingHoursByDoctorId(doctorId);
         }
 
         [HttpDelete("delete")]
-        public void Delete(int id)
+        public List<WorkingHours> Delete(int id, int doctorId)
         {
             _workingHoursService.Delete(id);
+            return _workingHoursService.GetWorkingHoursByDoctorId(doctorId);
         }
     }
 }

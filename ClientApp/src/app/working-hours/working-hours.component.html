@@ -23,36 +23,37 @@
        </tr>
      </tbody>
    </table>
-   <div class="form-check form-check-inline mt-3">
-     <mat-form-field appearance="fill">
-       <mat-label>Day of a week</mat-label>
-       <mat-select #daySelector>
-         <mat-option *ngFor="let day of days" [value]="day">
-           {{day}}
-         </mat-option>
-       </mat-select>
-     </mat-form-field>
-   </div>
-   <div class="form-check form-check-inline mt-2">
-     <div class="form-group mt-2">
-       <label for="workingHoursHoursCount">Hours Count</label>
-       <input type="number" [(ngModel)]="workingHours.hoursCount"
-              class="form-control" id="workingHoursHoursCount"
-              placeholder="Enter Hours Count" value="{{workingHours.hoursCount}}" [ngModelOptions]="{standalone:true}">
+   <div class="card card-body">
+     <div class="form-check form-check-inline mt-3">
+       <mat-form-field appearance="fill">
+         <mat-label>Day of a week</mat-label>
+         <mat-select #daySelector>
+           <mat-option *ngFor="let day of days" [value]="day">
+             {{day}}
+           </mat-option>
+         </mat-select>
+       </mat-form-field>
+     </div>
+     <div class="form-check form-check-inline mt-2">
+       <div class="form-group mt-2">
+         <label for="workingHoursHoursCount">Hours Count</label>
+         <input type="number" min="1" max="8" [(ngModel)]="workingHours.hoursCount"
+                class="form-control" id="workingHoursHoursCount"
+                placeholder="Enter Hours Count" value="{{workingHours.hoursCount}}" [ngModelOptions]="{standalone:true}">
+       </div>
+     </div>
+     <div class="form-check form-check-inline mt-2">
+       <div class="form-group mt-2">
+         <label for="workingHoursHourFrom">Hour From</label>
+         <input type="number" min="0" max="15" [(ngModel)]="workingHours.hourFrom"
+                class="form-control" id="workingHoursHoursCount"
+                placeholder="Enter Hour From" value="{{workingHours.hourFrom}}" [ngModelOptions]="{standalone:true}">
+       </div>
+     </div>
+     <div class="form-check form-check-inline mt-2">
+       <div class="form-group mt-2">
+         <a class="btn btn-success" (click)="create(workingHours, daySelector.value)">Add</a>
+       </div>
      </div>
    </div>
-   <div class="form-check form-check-inline mt-2">
-     <div class="form-group mt-2">
-       <label for="workingHoursHourFrom">Hour From</label>
-       <input type="number" [(ngModel)]="workingHours.hourFrom"
-              class="form-control" id="workingHoursHoursCount"
-              placeholder="Enter Hour From" value="{{workingHours.hourFrom}}" [ngModelOptions]="{standalone:true}">
-     </div>
-   </div>
-   <div class="form-check form-check-inline mt-2">
-     <div class="form-group mt-2">
-       <button type="button" class="btn btn-success" (click)="create(workingHours, daySelector.value)">Add</button>
-     </div>
-   </div>
-
  </div>

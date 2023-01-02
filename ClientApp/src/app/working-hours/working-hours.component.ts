@@ -34,35 +34,43 @@ export class WorkingHoursComponent {
   ngOnInit(): void {
     this.doctorId = this.authService.getAuthUserId();
     this.getAllByDoctorId(this.doctorId);
-    this.days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].filter(day => !this.list.some(wh => wh.dayOfWeek === day));
     this.workingHours.doctorId = this.doctorId;
   }
 
   public getAllByDoctorId(doctorId: number): void {
     this.doctorId = doctorId;
     this.httpClient.get<WorkingHours[]>(this.baseUrl + 'list?doctorId=' + doctorId)
-                   .subscribe(response => this.list = response);
+      .subscribe(response => {
+        this.list = response;
+        this.days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].filter(day => !this.list.some(wh => wh.dayOfWeek === day));
+      });
+
   }
 
   public create(workingHours: WorkingHours, day: string): void {
     workingHours.dayOfWeek = day;
-    this.httpClient.post(this.baseUrl + "create", JSON.stringify(workingHours), {
+    this.httpClient.post<WorkingHours[]>(this.baseUrl + "create?doctorId=" + this.authService.getAuthUserId(), JSON.stringify(workingHours), {
       headers: new HttpHeaders({
         "Content-Type": "application/json"
       })
-    }).subscribe({
-      next: (_) => {
-        this.list.push(workingHours);
-        this.workingHours = new WorkingHours;
+    }).subscribe(
+      response => {
+        this.list = response;
+        this.workingHours = new WorkingHours();
+        this.days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].filter(day => !this.list.some(wh => wh.dayOfWeek === day));
       }
-    });
+    );
   }
 
   public delete(id?: number): void {
-    this.httpClient.delete(
-      configurl.apiServer.url + "/api/working-hours/delete?id=" + id
+    this.httpClient.delete<WorkingHours[]>(
+      configurl.apiServer.url + "/api/working-hours/delete?id=" + id + "&doctorId=" + this.authService.getAuthUserId()
     ).subscribe(
-      _ => this.list = this.list?.filter(element => element?.id !== id),
+      response => {
+        this.list = response;
+        this.workingHours = new WorkingHours();
+        this.days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].filter(day => !this.list.some(wh => wh.dayOfWeek === day));
+      }
     );
   }
 

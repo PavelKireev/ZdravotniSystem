@@ -23,9 +23,9 @@
              id="doctorLastName" placeholder="Enter last name" value="{{doctor.lastName}}" [ngModelOptions]="{standalone:true}">
     </div>
     <div class="form-group mt-2">
-      <label for="doctorInsuranceNumber">Office Number</label>
+      <label for="doctorOfficeNumber">Office Number</label>
       <input type="number" [(ngModel)]="doctor.officeNumber" class="form-control"
-             id="doctorInsuranceNumber" placeholder="Enter office number" value="{{doctor.officeNumber}}" [ngModelOptions]="{standalone:true}">
+             id="doctorOfficeNumber" placeholder="Enter office number" value="{{doctor.officeNumber}}" [ngModelOptions]="{standalone:true}">
     </div>
     <button type="submit" (click)="update(doctor)" class="btn btn-primary mt-3">Submit</button>
   </form>

@@ -1,0 +1,76 @@
+-<div *ngIf="!isUserAuthenticated()">
+  <login></login>
+</div>
+ <div *ngIf="isUserAuthenticated() && isAdmin()">
+   <div class=" mt-2">
+     <mat-form-field appearance="fill">
+       <mat-label>Role</mat-label>
+       <mat-select #roleSelector>
+         <mat-option *ngFor="let role of roles" [value]="role.value">
+           {{role.viewValue}}
+         </mat-option>
+       </mat-select>
+     </mat-form-field>
+   </div>
+   <div class="form-group mt-2">
+     <label for="userEmail">Email address</label>
+     <input type="email" [(ngModel)]="user.email" class="form-control"
+            id="userEmail" aria-describedby="emailHelp" placeholder="Enter email"
+            value="{{user.email}}" [ngModelOptions]="{standalone:true}">
+     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+   </div>
+   <div class="form-group mt-2">
+     <label for="userFirstName">First Name</label>
+     <input type="text" [(ngModel)]="user.firstName"
+            class="form-control" id="userFirstName"
+            placeholder="Enter first name" value="{{user.firstName}}" [ngModelOptions]="{standalone:true}">
+   </div>
+   <div class="form-group mt-2">
+     <label for="userLastName">Last Name</label>
+     <input type="text" [(ngModel)]="user.lastName" class="form-control"
+            id="userLastName" placeholder="Enter last name" value="{{user.lastName}}" [ngModelOptions]="{standalone:true}">
+   </div>
+   <div class="form-group mt-2">
+     <label for="userPhoneNumber">Phone Number</label>
+     <input type="text" [(ngModel)]="user.phoneNumber" class="form-control"
+            id="userPhoneNumber" placeholder="Enter phone number" value="{{user.phoneNumber}}" [ngModelOptions]="{standalone:true}">
+   </div>
+   <div class="form-group mt-2">
+     <label for="userInsuranceNumber">Insurance Number</label>
+     <input type="number" [(ngModel)]="user.insuranceNumber" class="form-control"
+            id="userInsuranceNumber" placeholder="Enter insurance number" value="{{user.insuranceNumber}}" [ngModelOptions]="{standalone:true}">
+   </div>
+   <div class="form-group mt-2">
+     <label for="userOfficeNumber">Office Number</label>
+     <input type="number" [(ngModel)]="user.officeNumber" class="form-control"
+            id="userOfficeNumber" placeholder="Enter office number" value="{{user.officeNumber}}" [ngModelOptions]="{standalone:true}">
+   </div>
+   <div class="mt-2">
+     <label for="userBirthDate">Birth Date</label>
+     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+     <mat-datepicker #picker></mat-datepicker>
+     <input class="form-control" matInput [matDatepicker]="picker" [(ngModel)]="user.birthDate" [ngModelOptions]="{standalone:true}" id="userBirthDate">
+   </div>
+   <hr>
+   <div class="form-group mt-2 row">
+     <form [formGroup]="passwordForm" autocomplete="off" novalidate>
+       <div class="mb-3 row">
+         <label for="password" class="col-form-label col-sm-2">Password:</label>
+         <div class="col-md-5">
+           <input type="password" id="password" formControlName="password" class="form-control" />
+         </div>
+         <div class="col-md-5">
+           <em *ngIf="validateControl('password') && hasError('password', 'required')">Password is required</em>
+         </div>
+       </div>
+       <div class="mb-3 row">
+         <label for="confirm" class="col-form-label col-sm-2">Confirm Password:</label>
+         <div class="col-md-5">
+           <input type="password" id="confirm" formControlName="confirm" class="form-control" />
+         </div>
+       </div>
+       <hr>
+       <button type="submit" (click)="update(user, passwordForm.value, roleSelector.value)" [disabled]="!passwordForm.valid" class="btn btn-primary mt-3">Submit</button>
+     </form>
+   </div>
+ </div>

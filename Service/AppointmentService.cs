@@ -7,6 +7,8 @@ namespace ZdravotniSystem.Service
     public interface IAppointmentService
     {
         List<Appointment> FindAll();
+        List<Appointment> FindAllByUserIdAndRole(int userId, string role);
+        List<Appointment> FindAllByDoctorId(int doctorId);
         void Delete(int id);
         void Create(Appointment appointment);
     }
@@ -35,6 +37,16 @@ namespace ZdravotniSystem.Service
         public List<Appointment> FindAll()
         {
             return _appointmetRepository.FindAll();
+        }
+
+        public List<Appointment> FindAllByDoctorId(int doctorId)
+        {
+            return _appointmetRepository.FindAll();
+        }
+
+        public List<Appointment> FindAllByUserIdAndRole(int userId, string role)
+        {
+            throw new NotImplementedException();
         }
     }
 

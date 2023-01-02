@@ -21,6 +21,7 @@ import { MyProfileComponent } from './myprofile/myprofile.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { WorkingHoursComponent } from './working-hours/working-hours.component';
+import { CreateUserComponent } from './create-user/create-user.component';
 
 const routes: Routes = [
   { path: '', component: MyProfileComponent },
@@ -31,7 +32,8 @@ const routes: Routes = [
   { path: 'registration', component: RegisterUserComponent },
   { path: 'login', component: LoginComponent },
   { path: 'my-profile', component: MyProfileComponent },
-  { path: 'working-hours', component: WorkingHoursComponent }
+  { path: 'working-hours', component: WorkingHoursComponent },
+  { path: 'create-user', component: CreateUserComponent }
 ];
 
 export function tokenGetter() {
@@ -49,7 +51,8 @@ export function tokenGetter() {
     NavMenuComponent,
     PatientComponent,
     RegisterUserComponent,
-    WorkingHoursComponent
+    WorkingHoursComponent,
+    CreateUserComponent
   ],
   imports: [
     BrowserModule,
