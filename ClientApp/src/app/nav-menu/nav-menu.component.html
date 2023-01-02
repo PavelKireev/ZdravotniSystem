@@ -7,7 +7,7 @@
     </button>
     <div class="collapse navbar-collapse" id="collapseNav">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="isUserAuthenticated()">
           <a class="nav-link" [routerLink]="['/my-profile']" routerLinkActive="active"
              [routerLinkActiveOptions]="{exact: true}">My Profile</a>
         </li>
@@ -38,9 +38,9 @@
       </ul>
       <div class="collapse navbar-collapse" id="collapseNav" *ngIf="isAdmin() || isDoctor()">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="isAdmin()">
             <a class="nav-link" (click)="showTable($event, 'patient')" routerLinkActive="active"
-               [routerLinkActiveOptions]="{exact: true}">Patients</a>
+               [routerLinkActiveOptions]="{exact: true}">Create User (Not Implemented)</a>
           </li>
         </ul>
       </div>

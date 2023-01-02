@@ -1,0 +1,22 @@
+-<div *ngIf="!isUserAuthenticated()">
+  <login></login>
+</div>
+<div *ngIf="isUserAuthenticated()">
+  <h2>My Working Hours</h2>
+  <div class="form-group mt-2">
+    <div class="form-group mt-2">
+      <label for="workingHoursHoursCount">Hours Count</label>
+      <input type="number" [(ngModel)]="workingHours.hoursCount"
+             class="form-control" id="workingHoursHoursCount"
+             placeholder="Enter first name" value="{{workingHours.hoursCount}}" [ngModelOptions]="{standalone:true}">
+    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>Day of a week</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let day of days" [value]=" workingHours.dayOfWeek">
+          {{workingHours.dayOfWeek}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>

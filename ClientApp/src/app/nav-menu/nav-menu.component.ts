@@ -20,18 +20,19 @@ export class NavMenuComponent {
   }
 
   public showTable($event: any, type: string) {
-    this.router.navigate(["list", { type: type }])
+    this.router.navigate(["list", { type: type }]);
   }
+
   public isUserAuthenticated(): boolean {
     return this.authService.isUserAuthenticated();
   }
 
   public isAdmin(): boolean {
-    return this.authService.isAdmin();
+    return this.isUserAuthenticated() && this.authService.isAdmin();
   }
 
   public isDoctor(): boolean {
-    return this.authService.isDoctor();
+    return this.isUserAuthenticated() && this.authService.isDoctor();
   }
 
   public logout = () => {

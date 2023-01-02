@@ -14,11 +14,13 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { RegisterUserComponent } from './authentication/register-user/register-user.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthService } from './service/auth.service';
 import { MyProfileComponent } from './myprofile/myprofile.component';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { WorkingHoursComponent } from './working-hours/working-hours.component';
 
 const routes: Routes = [
   { path: '', component: MyProfileComponent },
@@ -28,7 +30,8 @@ const routes: Routes = [
   { path: 'patient', component: PatientComponent, canActivate: [AuthGuard] },
   { path: 'registration', component: RegisterUserComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'my-profile', component: MyProfileComponent }
+  { path: 'my-profile', component: MyProfileComponent },
+  { path: 'working-hours', component: WorkingHoursComponent }
 ];
 
 export function tokenGetter() {
@@ -45,7 +48,8 @@ export function tokenGetter() {
     MyProfileComponent,
     NavMenuComponent,
     PatientComponent,
-    RegisterUserComponent
+    RegisterUserComponent,
+    WorkingHoursComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +59,7 @@ export function tokenGetter() {
     MatFormFieldModule,
     BrowserAnimationsModule,
     MatNativeDateModule,
+    MatSelectModule,
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
     JwtModule.forRoot({
