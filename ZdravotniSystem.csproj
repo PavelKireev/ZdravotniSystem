@@ -34,6 +34,7 @@
     <None Remove="ClientApp\src\app\service\auth.service.ts" />
     <None Remove="ClientApp\src\app\service\products.service.ts" />
     <None Remove="ClientApp\src\app\shared\datepicker-popup.ts" />
+    <None Remove="ClientApp\src\app\working-hours\working-hours.component.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +45,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\homepage\homepage.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\service\auth.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\service\products.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\working-hours\working-hours.component.ts" />
   </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

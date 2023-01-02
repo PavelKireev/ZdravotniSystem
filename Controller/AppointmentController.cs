@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ZdravotniSystem.DB.Entity;
 using ZdravotniSystem.Service;
 
 namespace ZdravotniSystem.Controllers
@@ -8,39 +9,29 @@ namespace ZdravotniSystem.Controllers
     [ApiController, Authorize]
     public class AppointmentController : ControllerBase
     {
-        private readonly AppointmentService _appointmentService;
+        private readonly IAppointmentService _appointmentService;
 
-        public AppointmentController(AppointmentService appointmentService)
+        public AppointmentController(IAppointmentService appointmentService)
         {
-            this._appointmentService = appointmentService;
+            _appointmentService = appointmentService;
         }
 
-
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpGet("list")]
+        public List<Appointment> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _appointmentService.FindAll();
         }
 
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpPost("create")]
+        public void Post([FromBody] Appointment value)
         {
-            return "value";
+            _appointmentService.Create();
         }
 
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        [HttpDelete("{id}")]
+        [HttpDelete("delete")]
         public void Delete(int id)
         {
+            _appointmentService.Delete(id);
         }
     }
 }

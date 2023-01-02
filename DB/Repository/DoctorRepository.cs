@@ -82,8 +82,8 @@ namespace ZdravotniSystem.Repository
                 string
                     .Format(
                         "UPDATE doctor " +
-                        "SET first_name = '{1}', last_name = '{2}', email = '{3}', office_number = {4} " +
-                        "WHERE id = {0}; ", entity.Id, entity.FirstName, entity.LastName, entity.Email, entity.OfficeNumber
+                        "SET office_number = '{1}' " +
+                        "WHERE email = '{0}'; ", entity.Email, entity.OfficeNumber
                     );
 
             cmd.ExecuteNonQuery();
@@ -93,7 +93,7 @@ namespace ZdravotniSystem.Repository
         {
             SQLiteCommand cmd = new(Connection);
 
-            cmd.CommandText = string.Format("SELECT * FROM users INNER JOIN doctor USING(email) WHERE email = '{0}' ;", email);
+            cmd.CommandText = string.Format("SELECT * FROM doctor INNER JOIN users USING(email) WHERE email = '{0}' ;", email);
             cmd.CommandType = CommandType.Text;
 
             SQLiteDataReader reader = cmd.ExecuteReader();

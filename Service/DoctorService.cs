@@ -21,10 +21,14 @@ namespace ZdravotniSystem.Service
         private readonly IDoctorRepository _doctorRepository;
         private readonly IUserRepository _userRepository;
 
-        public DoctorService(ILogger<DoctorService> logger, IDoctorRepository doctorRepository)
-        {
+        public DoctorService(
+            ILogger<DoctorService> logger, 
+            IDoctorRepository doctorRepository, 
+            IUserRepository userRepository
+        ) {
             _logger = logger;
             _doctorRepository = doctorRepository;
+            _userRepository = userRepository;
         }
 
         public void Create(Doctor doctor)
