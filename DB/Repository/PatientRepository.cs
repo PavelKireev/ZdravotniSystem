@@ -28,7 +28,7 @@ namespace ZdravotniSystem.Repository
             return new Patient();
         }
 
-        public Patient? GetOneByEmail(string email)
+        public Patient GetOneByEmail(string email)
         {
             SQLiteCommand cmd = new(Connection);
 

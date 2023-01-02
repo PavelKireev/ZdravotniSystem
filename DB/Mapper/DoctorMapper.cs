@@ -9,10 +9,12 @@ namespace ZdravotniSystem.DB.Mapper
             Doctor doctor = new();
 
             doctor.Id = reader.GetInt32(0);
-            doctor.FirstName = reader.GetString(1);
-            doctor.LastName = reader.GetString(2);
-            doctor.Email = reader.GetString(3);
-            doctor.OfficeNumber = reader.GetInt32(4);
+            doctor.Email = reader.GetString(1);
+            doctor.OfficeNumber = reader.GetInt32(2);
+            doctor.FirstName = reader.GetString(4);
+            doctor.LastName = reader.GetString(5);
+            doctor.Password = reader.GetString(6);
+            doctor.Role = reader.GetString(7);
 
             return doctor;
         }

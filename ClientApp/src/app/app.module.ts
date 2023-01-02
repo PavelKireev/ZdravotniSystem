@@ -21,7 +21,8 @@ import { AuthService } from './service/auth.service';
 import { MyProfileComponent } from './myprofile/myprofile.component';
 
 const routes: Routes = [
-  { path: '', component: HomepageComponent },
+  { path: '', component: MyProfileComponent },
+  { path: 'list', component: HomepageComponent },
   { path: 'appointment', component: AppointmentComponent, canActivate: [AuthGuard] },
   { path: 'doctor', component: DoctorComponent, canActivate: [AuthGuard] },
   { path: 'patient', component: PatientComponent, canActivate: [AuthGuard] },

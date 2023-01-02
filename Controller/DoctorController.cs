@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ZdravotniSystem.DB.Entity;
+using ZdravotniSystem.Model;
 using ZdravotniSystem.Service;
 
 namespace ZdravotniSystem.Controllers
@@ -13,34 +15,40 @@ namespace ZdravotniSystem.Controllers
 
         public DoctorController(IDoctorService doctorService)
         {
-            this._doctorService = doctorService;
+            _doctorService = doctorService;
+        }
+
+        [HttpGet("list")]
+        public List<Doctor> Get()
+        {
+            return _doctorService.FindAll();
         }
 
         [HttpGet]
-        public IEnumerable<string> Get()
+        public DoctorModel Get(string email)
         {
-            return new string[] { "value1", "value2" };
+            Doctor doctor = _doctorService.GetDoctorByEmail(email);
+
+            return new DoctorModel()
+            {
+                Id = doctor.Id,
+                FirstName = doctor.FirstName,
+                LastName = doctor.LastName,
+                Email = doctor.Email,
+                OfficeNumber = doctor.OfficeNumber
+            };
         }
 
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpPost("update")]
+        public void Post([FromBody] DoctorModel value)
         {
-            return "value";
+            _doctorService.Update(value);
         }
 
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpDelete("delete")]
+        public void Delete(string email)
         {
-        }
-
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            _doctorService.DeleteByEmail(email);
         }
     }
 }

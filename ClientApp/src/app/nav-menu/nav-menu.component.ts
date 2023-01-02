@@ -19,6 +19,9 @@ export class NavMenuComponent {
 
   }
 
+  public showTable($event: any, type: string) {
+    this.router.navigate(["list", { type: type }])
+  }
   public isUserAuthenticated(): boolean {
     return this.authService.isUserAuthenticated();
   }
@@ -33,7 +36,7 @@ export class NavMenuComponent {
 
   public logout = () => {
     this.authService.logout();
-    this.router.navigate([""]);
+    this.router.navigate(["/list"]);
   }
 
 }

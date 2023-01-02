@@ -8,6 +8,7 @@ namespace ZdravotniSystem.Repository
 {
     public interface IDoctorRepository : IRepository<Doctor> {
         Doctor GetOneByEmail(string email);
+        void DeleteByEmail(string email);
     }
 
     public class DoctorRepository : AbstractRepository, IDoctorRepository
@@ -33,7 +34,7 @@ namespace ZdravotniSystem.Repository
 
             SQLiteCommand cmd = Connection.CreateCommand();
 
-            cmd.CommandText = "SELECT DISTINCT * FROM doctor";
+            cmd.CommandText = "SELECT DISTINCT * FROM doctor INNER JOIN users USING(email); ";
             cmd.CommandType = CommandType.Text;
             SQLiteDataReader r = cmd.ExecuteReader();
             while (r.Read())
@@ -92,16 +93,25 @@ namespace ZdravotniSystem.Repository
         {
             SQLiteCommand cmd = new(Connection);
 
-            cmd.CommandText = string.Format("SELECT * FROM users INNER JOIN doctor USING(email) WHERE email = {0} ;", email);
+            cmd.CommandText = string.Format("SELECT * FROM users INNER JOIN doctor USING(email) WHERE email = '{0}' ;", email);
             cmd.CommandType = CommandType.Text;
 
             SQLiteDataReader reader = cmd.ExecuteReader();
 
-            //TODO: rework mapper
             if (reader.Read())
                 return DoctorMapper.Map(reader);
 
             return new Doctor();
+        }
+
+        public void DeleteByEmail(string email)
+        {
+            SQLiteCommand cmd = new(Connection)
+            {
+                CommandText = string.Format("DELETE FROM doctor WHERE email = '{0}';", email)
+            };
+
+            cmd.ExecuteNonQuery();
         }
     }
 }

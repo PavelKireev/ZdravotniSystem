@@ -51,14 +51,14 @@ namespace ZdravotniSystem.Service
                     };
                 case "PATIENT":
                     Patient patient = _patientRepository.GetOneByEmail(email);
-                    string birthDate = string.IsNullOrEmpty(patient.BirthDate) ? "" : patient.BirthDate;
+                    DateTime birthDate = string.IsNullOrEmpty(patient.BirthDate) ? default : DateTime.Parse(patient.BirthDate);
                     return new AuthUserDto()
                     {
                         Id = patient.Id,
                         FirstName = patient.FirstName,
                         LastName = patient.LastName,
                         Email = patient.Email,
-                        BirthDate = DateTime.Parse(birthDate),
+                        BirthDate = birthDate,
                         PhoneNumber = patient.PhoneNumber,
                         InsuranceNumber = patient.InsuranceNumber
                     };

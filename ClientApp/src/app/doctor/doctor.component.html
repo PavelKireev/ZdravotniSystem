@@ -1,10 +1,32 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
-
-</body>
-</html>
+-<div *ngIf="!isUserAuthenticated()">
+  <login></login>
+</div>
+<div *ngIf="isUserAuthenticated()">
+  <h2>{{doctor.firstName}} {{doctor.lastName}}</h2>
+  <form>
+    <div class="form-group mt-2">
+      <label for="doctorEmail">Email address</label>
+      <input type="email" [(ngModel)]="doctor.email" class="form-control"
+             id="doctorEmail" disabled aria-describedby="emailHelp" placeholder="Enter email"
+             value="{{doctor.email}}" [ngModelOptions]="{standalone:true}">
+      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <div class="form-group mt-2">
+      <label for="doctorFirstName">First Name</label>
+      <input type="text" [(ngModel)]="doctor.firstName"
+             class="form-control" id="doctorFirstName"
+             placeholder="Enter first name" value="{{doctor.firstName}}" [ngModelOptions]="{standalone:true}">
+    </div>
+    <div class="form-group mt-2">
+      <label for="doctorLastName">Last Name</label>
+      <input type="text" [(ngModel)]="doctor.lastName" class="form-control"
+             id="doctorLastName" placeholder="Enter last name" value="{{doctor.lastName}}" [ngModelOptions]="{standalone:true}">
+    </div>
+    <div class="form-group mt-2">
+      <label for="doctorInsuranceNumber">Office Number</label>
+      <input type="number" [(ngModel)]="doctor.officeNumber" class="form-control"
+             id="doctorInsuranceNumber" placeholder="Enter office number" value="{{doctor.officeNumber}}" [ngModelOptions]="{standalone:true}">
+    </div>
+    <button type="submit" (click)="update(doctor)" class="btn btn-primary mt-3">Submit</button>
+  </form>
+</div>

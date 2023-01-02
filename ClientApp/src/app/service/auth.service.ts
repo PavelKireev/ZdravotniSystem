@@ -7,7 +7,7 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 export class AuthService {
 
   constructor(
-    private jwtHelper: JwtHelperService,
+    private jwtHelper: JwtHelperService
   ) { }
 
   public isUserAuthenticated(): boolean {
@@ -38,6 +38,10 @@ export class AuthService {
 
   private getRole(): string {
     let token = localStorage.getItem("jwt");
-    return JSON.parse(window.atob(token!.split('.')[1]));
+    if (token !== null) {
+      return this.jwtHelper.decodeToken(token)["role"];
+    } else {
+      return '';
+    }
   }
 }

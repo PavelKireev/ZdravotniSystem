@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using ZdravotniSystem.DB.Entity;
 using ZdravotniSystem.DB.Repository;
+using ZdravotniSystem.DTO;
 using ZdravotniSystem.Model;
 using ZdravotniSystem.Service;
 using ZdravotniSystem.Validator;
@@ -55,8 +56,8 @@ namespace ZdravotniSystem.Controller
             if (user != null && model.UserName.Equals(user.Email) && BCrypt.Net.BCrypt.Verify(model.Password, user.Password))
             {
                 var tokenClaims = new[] {
-                    new Claim(ClaimTypes.Email, user.Email),
-                    new Claim(ClaimTypes.Role, "PATIENT")
+                    new Claim("email", user.Email),
+                    new Claim("role", user.Role)
                 };
 
                 var jwtSettings = _configuration.GetSection("JwtSettings");
@@ -97,7 +98,7 @@ namespace ZdravotniSystem.Controller
         }
 
         [HttpGet("my-profile"), Authorize]
-        public User GetMyProfile()
+        public AuthUserDto GetMyProfile()
         {
             return _authService.GetAuthenticatedUser(
                             this.User.Claims.First(i => i.Type.Equals(ClaimTypes.Email)).Value,

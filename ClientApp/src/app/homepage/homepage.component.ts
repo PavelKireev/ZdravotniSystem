@@ -20,9 +20,11 @@ export class HomepageComponent {
     private jwtHelper: JwtHelperService,
     private httpClient: HttpClient,
     private router: Router,
-  ) { }
+  ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.fillTable();
   }
 
@@ -42,6 +44,7 @@ export class HomepageComponent {
 
   fillTable(): void {
     let type = this.actRoute.snapshot.params['type']
+    this.tableList = [];
     this.httpClient.get<User[]>(configurl.apiServer.url + "/api/" + type + "/list").subscribe(
       (users: User[]) => {
         this.tableList = users;
@@ -59,10 +62,10 @@ export class HomepageComponent {
         this.router.navigate(["patient", { email: email }])
         break;
       case "DOCTOR":
-        this.router.navigate(["doctor", email])
+        this.router.navigate(["doctor", { email: email }])
         break;
       case "ADMIN":
-        this.router.navigate(["admin", email])
+        this.router.navigate(["admin", { email: email }])
         break;
     }
   }
