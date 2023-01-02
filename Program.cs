@@ -55,12 +55,14 @@ builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 builder.Services.AddScoped<IDoctorService, DoctorService>();
 builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IWorkingHoursService, WorkingHoursService>();
 
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
 
 builder.Services.AddSingleton<IAppointmentRepository, AppointmentRepository>();
 builder.Services.AddSingleton<IDoctorRepository, DoctorRepository>();
 builder.Services.AddSingleton<IPatientRepository, PatientRepository>();
+builder.Services.AddSingleton<IWorkingHoursRepository, WorkingHoursRepository>();
 
 builder.Services.AddSingleton<IRegistrationModelValidator, RegistrationModelValidator>();
 

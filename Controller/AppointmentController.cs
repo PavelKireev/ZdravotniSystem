@@ -25,7 +25,7 @@ namespace ZdravotniSystem.Controllers
         [HttpPost("create")]
         public void Post([FromBody] Appointment value)
         {
-            _appointmentService.Create();
+            _appointmentService.Create(value);
         }
 
         [HttpDelete("delete")]

@@ -5,8 +5,11 @@ using ZdravotniSystem.DB.Mapper;
 
 namespace ZdravotniSystem.DB.Repository
 {
-
-    public class WorkingHoursRepository : AbstractRepository, IRepository<WorkingHours>
+    public interface IWorkingHoursRepository : IRepository<WorkingHours>
+    {
+        List<WorkingHours> FindAllByDoctorId(int doctorId);
+    }
+    public class WorkingHoursRepository : AbstractRepository, IWorkingHoursRepository
     {
 
         public WorkingHours GetOne(int id)
