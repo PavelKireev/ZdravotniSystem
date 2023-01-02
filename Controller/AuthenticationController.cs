@@ -56,6 +56,7 @@ namespace ZdravotniSystem.Controller
             if (user != null && model.UserName.Equals(user.Email) && BCrypt.Net.BCrypt.Verify(model.Password, user.Password))
             {
                 var tokenClaims = new[] {
+                    new Claim("id", user.Id),
                     new Claim("email", user.Email),
                     new Claim("role", user.Role)
                 };
@@ -101,8 +102,8 @@ namespace ZdravotniSystem.Controller
         public AuthUserDto GetMyProfile()
         {
             return _authService.GetAuthenticatedUser(
-                            this.User.Claims.First(i => i.Type.Equals(ClaimTypes.Email)).Value,
-                            this.User.Claims.First(i => i.Type.Equals(ClaimTypes.Role)).Value);
+                            this.User.Claims.First(i => i.Type.Equals("email")).Value,
+                            this.User.Claims.First(i => i.Type.Equals("role")).Value);
 
         }
     }

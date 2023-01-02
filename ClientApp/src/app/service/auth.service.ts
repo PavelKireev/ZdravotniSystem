@@ -36,6 +36,24 @@ export class AuthService {
     return this.getRole() === 'PATIENT';
   }
 
+  public getAuthUserEmail(): string {
+    let token = localStorage.getItem("jwt");
+    if (token !== null) {
+      return this.jwtHelper.decodeToken(token)["email"];
+    } else {
+      return '';
+    }
+  }
+
+  public getAuthUserId(): number {
+    let token = localStorage.getItem("jwt");
+    if (token !== null) {
+      return this.jwtHelper.decodeToken(token)["id"];
+    } else {
+      return 0;
+    }
+  }
+
   private getRole(): string {
     let token = localStorage.getItem("jwt");
     if (token !== null) {

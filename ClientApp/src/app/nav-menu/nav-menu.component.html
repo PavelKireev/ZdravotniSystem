@@ -14,7 +14,7 @@
       </ul>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="isDoctor()">
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active"
+          <a class="nav-link" [routerLink]="['/working-hours']" routerLinkActive="active"
              [routerLinkActiveOptions]="{exact: true}">My Working Hours</a>
         </li>
       </ul>

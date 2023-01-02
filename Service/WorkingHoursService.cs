@@ -1,4 +1,5 @@
 ﻿using ZdravotniSystem.DB.Entity;
+using ZdravotniSystem.DB.Repository;
 
 namespace ZdravotniSystem.Service
 {
@@ -11,19 +12,26 @@ namespace ZdravotniSystem.Service
     }
     public class WorkingHoursService : IWorkingHoursService
     {
+        private readonly IWorkingHoursRepository _workingHoursRepository;
+
+        public WorkingHoursService(IWorkingHoursRepository workingHoursRepository)
+        {
+            _workingHoursRepository = workingHoursRepository;
+        }
+
         public void Create(WorkingHours workingHours)
         {
-            throw new NotImplementedException();
+            _workingHoursRepository.Save(workingHours);
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            _workingHoursRepository.Delete(id);
         }
 
         public List<WorkingHours> GetWorkingHoursByDoctorId(int id)
         {
-            throw new NotImplementedException();
+            return _workingHoursRepository.FindAllByDoctorId(id);
         }
     }
 }
