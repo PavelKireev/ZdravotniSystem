@@ -31,13 +31,13 @@ namespace ZdravotniSystem.Configuration.Security
         public async Task<List<Claim>> GetClaims(User user)
         {
             var claims = new List<Claim> {
-                new Claim(ClaimTypes.Name, user.Email)
+                new Claim("email", user.Email)
             };
 
             var roles = await _userManager.GetRolesAsync(user);
             foreach (var role in roles)
             {
-                claims.Add(new Claim(ClaimTypes.Role, role));
+                claims.Add(new Claim("role", role));
             }
             return claims;
         }

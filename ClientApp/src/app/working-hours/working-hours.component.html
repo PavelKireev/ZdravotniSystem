@@ -13,21 +13,21 @@
          <th scope="col"></th>
        </tr>
      </thead>
-     <tbody *ngFor="let workingHoursList of list; let i = index">
+     <tbody *ngFor="let workingHoursItem of list; let i = index">
        <tr>
          <th scope="row">{{i + 1}}</th>
-         <td>{{workingHoursList.dayOfWeek}}</td>
-         <td>{{workingHoursList.hourFrom}}</td>
-         <td>{{workingHoursList.hoursCount}}</td>
-         <td><button type="button" class="btn btn-danger" (click)="delete(workingHours.id!)">Delete</button></td>
+         <td>{{workingHoursItem.dayOfWeek}}</td>
+         <td>{{workingHoursItem.hourFrom}}</td>
+         <td>{{workingHoursItem.hoursCount}}</td>
+         <td><button type="button" class="btn btn-danger" (click)="delete(workingHoursItem.id)">Delete</button></td>
        </tr>
      </tbody>
    </table>
    <div class="form-check form-check-inline mt-3">
      <mat-form-field appearance="fill">
        <mat-label>Day of a week</mat-label>
-       <mat-select>
-         <mat-option *ngFor="let day of days" [value]="this.workingHours.dayOfWeek">
+       <mat-select #daySelector>
+         <mat-option *ngFor="let day of days" [value]="day">
            {{day}}
          </mat-option>
        </mat-select>
@@ -51,7 +51,7 @@
    </div>
    <div class="form-check form-check-inline mt-2">
      <div class="form-group mt-2">
-       <button type="button" class="btn btn-success" (click)="create(workingHours)">Add</button>
+       <button type="button" class="btn btn-success" (click)="create(workingHours, daySelector.value)">Add</button>
      </div>
    </div>
 
