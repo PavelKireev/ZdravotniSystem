@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -18,6 +17,9 @@ namespace ZdravotniSystem.Controller
     public class AuthenticationController : ControllerBase
     {
 
+        private readonly ILogger<AuthenticationController> _logger;
+
+        private readonly IAuthService _authService;
         private readonly IConfiguration _configuration;
         private readonly IUserRepository _userRepository;
         private readonly IPatientService _patientService;
@@ -25,12 +27,15 @@ namespace ZdravotniSystem.Controller
         private readonly IRegistrationModelValidator _registrationModelValidator;
 
         public AuthenticationController(
-            IConfiguration configuration,
-            IUserRepository userRepository,
-            IPatientService patientService,
+            ILogger<AuthenticationController> logger,
+            IAuthService authService,
+            IConfiguration configuration, 
+            IUserRepository userRepository, 
+            IPatientService patientService, 
             IRegistrationModelValidator registrationModelValidator
-        )
-        {
+        ) {
+            _logger = logger;
+            _authService = authService;
             _configuration = configuration;
             _userRepository = userRepository;
             _patientService = patientService;
@@ -89,6 +94,15 @@ namespace ZdravotniSystem.Controller
             {
                 return BadRequest(validationResult.Message);
             }
+        }
+
+        [HttpGet("my-profile"), Authorize]
+        public User GetMyProfile()
+        {
+            return _authService.GetAuthenticatedUser(
+                            this.User.Claims.First(i => i.Type.Equals(ClaimTypes.Email)).Value,
+                            this.User.Claims.First(i => i.Type.Equals(ClaimTypes.Role)).Value);
+
         }
     }
 }

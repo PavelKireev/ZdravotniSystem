@@ -1,30 +1,42 @@
 -<div *ngIf="!isUserAuthenticated()">
   <login></login>
 </div>
-<div *ngIf="isUserAuthenticated()">
-  <h2>{{patient?.firstName}} {{patient?.lastName}}</h2>
-  <form>
-    <div class="form-group mt-2">
-      <label for="patientEmail">Email address</label>
-      <input type="email" [(ngModel)]="patient.email" class="form-control" id="patientEmail" disabled aria-describedby="emailHelp" placeholder="Enter email" value="{{patient?.email}}">
-      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-    </div>
-    <div class="form-group mt-2">
-      <label for="patientFirstName">First Name</label>
-      <input type="text" [(ngModel)]="patient.firstName"
-             class="form-control" id="patientFirstName"
-             placeholder="Enter first name" value="{{patient?.firstName}}">
-    </div>
-    <div class="form-group mt-2">
-      <label for="patientLastName">Last Name</label>
-      <input type="text" [(ngModel)]="patient.lastName" class="form-control"
-             id="patientLastName" placeholder="Enter last name" value="{{patient?.lastName}}">
-    </div>
-    <div class="form-group mt-2">
-      <label for="patientPhoneNumber">Phone Number</label>
-      <input type="text" class="form-control" id="patientPhoneNumber" placeholder="Phone Number">
-    </div>
-
-    <button type="submit" class="btn btn-primary mt-3">Submit</button>
-  </form>
-</div>
+ <div *ngIf="isUserAuthenticated()">
+   <h2>{{patient.firstName}} {{patient.lastName}}</h2>
+   <form>
+     <div class="form-group mt-2">
+       <label for="patientEmail">Email address</label>
+       <input type="email" [(ngModel)]="patient.email" class="form-control"
+              id="patientEmail" disabled aria-describedby="emailHelp" placeholder="Enter email"
+              value="{{patient.email}}" [ngModelOptions]="{standalone:true}">
+       <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+     </div>
+     <div class="form-group mt-2">
+       <label for="patientFirstName">First Name</label>
+       <input type="text" [(ngModel)]="patient.firstName"
+              class="form-control" id="patientFirstName"
+              placeholder="Enter first name" value="{{patient.firstName}}" [ngModelOptions]="{standalone:true}">
+     </div>
+     <div class="form-group mt-2">
+       <label for="patientLastName">Last Name</label>
+       <input type="text" [(ngModel)]="patient.lastName" class="form-control"
+              id="patientLastName" placeholder="Enter last name" value="{{patient.lastName}}" [ngModelOptions]="{standalone:true}">
+     </div>
+     <div class="form-group mt-2">
+       <label for="patientPhoneNumber">Phone Number</label>
+       <input type="text" [(ngModel)]="patient.phoneNumber" class="form-control"
+              id="patientPhoneNumber" placeholder="Enter phone number" value="{{patient.phoneNumber}}" [ngModelOptions]="{standalone:true}">
+     </div>
+     <div class="form-group mt-2">
+       <label for="patientInsuranceNumber">Insurance Number</label>
+       <input type="number" [(ngModel)]="patient.insuranceNumber" class="form-control"
+              id="patientInsuranceNumber" placeholder="Enter insurance number" value="{{patient.insuranceNumber}}" [ngModelOptions]="{standalone:true}">
+     </div>
+     <div class="mt-2">
+       <input matInput [matDatepicker]="picker" [(ngModel)]="patient.birthDate" [ngModelOptions]="{standalone:true}">
+       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+       <mat-datepicker #picker></mat-datepicker>
+     </div>
+     <button type="submit" (click)="update(patient)" class="btn btn-primary mt-3">Submit</button>
+   </form>
+ </div>

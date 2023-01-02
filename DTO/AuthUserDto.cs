@@ -1,6 +1,6 @@
-﻿namespace ZdravotniSystem.Model
+﻿namespace ZdravotniSystem.DTO
 {
-    public class PatientModel
+    public class AuthUserDto
     {
         public int Id { get; set; }
         public string? FirstName { get; set; }
@@ -9,6 +9,7 @@
         public string? PhoneNumber { get; set; }
         public DateTime? BirthDate { get; set; }
         public int InsuranceNumber { get; set; }
+        public int OfficeNumber { get; set; }
 
     }
 }

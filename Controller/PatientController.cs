@@ -21,27 +21,40 @@ namespace ZdravotniSystem.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("list")]
         public List<Patient> Get()
         {
             return _patientService.GetPatients();
         }
 
-        [HttpGet("patient")]
-        public Patient Get(string email)
+        [HttpGet]
+        public PatientModel Get(string email)
         {
-            return _patientService.GetPatientByEmail(email);
+            Patient patient = _patientService.GetPatientByEmail(email);
+            DateTime birthDate = string.IsNullOrEmpty(patient.BirthDate) ? default : DateTime.Parse(patient.BirthDate);
+
+            return new PatientModel()
+            {
+                Id = patient.Id,
+                FirstName = patient.FirstName,
+                LastName = patient.LastName,
+                Email = patient.Email,
+                PhoneNumber = patient.PhoneNumber,
+                BirthDate = birthDate,
+                InsuranceNumber = patient.InsuranceNumber
+            };
         }
 
         [HttpPost("update")]
         public void Post([FromBody] PatientModel value)
         {
+            _patientService.Update(value);
         }
 
         [HttpDelete("delete")]
         public void Delete(string email)
         {
-
+            _patientService.DeleteByEmail(email);
         }
     }
 }

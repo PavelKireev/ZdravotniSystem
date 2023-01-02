@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -8,32 +9,31 @@ import { Router } from '@angular/router';
 })
 export class NavMenuComponent {
 
-  isUserAuthenticated: boolean;
-
   constructor(
-    //private authService: AuthenticationService,
+    private authService: AuthService,
     private router: Router
   ) {
-    this.isUserAuthenticated = false;
   }
 
   ngOnInit(): void {
-    //this.authService.authChanged
-    //  .subscribe(res => {
-    //    this.isUserAuthenticated = res;
-    //  })
+
+  }
+
+  public isUserAuthenticated(): boolean {
+    return this.authService.isUserAuthenticated();
+  }
+
+  public isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
+
+  public isDoctor(): boolean {
+    return this.authService.isDoctor();
   }
 
   public logout = () => {
-    //this.authService.logout();
-    //this.router.navigate(["/"]);
+    this.authService.logout();
+    this.router.navigate([""]);
   }
 
-  public patientsTable($event: any) {
-    console.log("clicked", $event);
-  }
-
-  public appointmentsTable($event: any) {
-
-  }
 }

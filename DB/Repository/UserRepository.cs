@@ -10,6 +10,8 @@ namespace ZdravotniSystem.DB.Repository
         void Save(User user, string role);
         User GetOneByEmail(string email);
         bool DoesEmailExist(string email);
+        void Update(User user, string role);
+        void DeleteByEmail(string email);
     }
 
     public class UserRepository : AbstractRepository, IUserRepository
@@ -54,6 +56,30 @@ namespace ZdravotniSystem.DB.Repository
             int rowCount = Convert.ToInt32(cmd.ExecuteScalar());
 
             return rowCount > 0;
+        }
+
+        public void Update(User user, string role)
+        {
+            SQLiteCommand cmd = new(Connection);
+
+            cmd.CommandText =
+                string
+                    .Format(
+            "UPDATE users " +
+            "SET first_name = '{0}', last_name = '{1}', email = '{2}', " +
+            "role = '{3}' " +
+            "WHERE email = '{2}'; ",
+            user.FirstName, user.LastName, user.Email, role);
+
+            cmd.ExecuteNonQuery();
+        }
+
+        public void DeleteByEmail(string email)
+        {
+            SQLiteCommand cmd = new(Connection);
+            cmd.CommandText = string.Format("DELETE FROM users WHERE email = '{0}';", email);
+
+            cmd.ExecuteNonQuery();
         }
     }
 }

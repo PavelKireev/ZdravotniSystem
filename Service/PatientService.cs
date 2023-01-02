@@ -12,6 +12,7 @@ namespace ZdravotniSystem.Service
         List<Patient> GetPatients();
         Patient GetPatientByEmail(string email);
         void Update(PatientModel patientModel);
+        void DeleteByEmail(string email);
     }
 
     public class PatientService : IPatientService
@@ -26,6 +27,12 @@ namespace ZdravotniSystem.Service
             _logger = logger;
             _repository = repository;
             _userRepository = userRepository;
+        }
+
+        public void DeleteByEmail(string email)
+        {
+            _userRepository.DeleteByEmail(email);
+            _repository.DeleteByEmail(email);
         }
 
         public Patient GetPatientByEmail(string email)
@@ -54,17 +61,18 @@ namespace ZdravotniSystem.Service
 
         public void Update(PatientModel patientModel)
         {
-            _repository.Save(
-                new Patient()
-                {
-                    Id = patientModel.Id,
-                    FirstName = patientModel.FirstName,
-                    LastName = patientModel.LastName,
-                    Email = patientModel.Email,
-                    BirthDate = patientModel.BirthDate.ToString(),
-                    PhoneNumber = patientModel.PhoneNumber,
-                    InsuranceNumber = patientModel.InsuranceNumber
-                };
+            Patient patient = new Patient()
+            {
+                Id = patientModel.Id,
+                FirstName = patientModel.FirstName,
+                LastName = patientModel.LastName,
+                Email = patientModel.Email,
+                BirthDate = patientModel.BirthDate.ToString(),
+                PhoneNumber = patientModel.PhoneNumber,
+                InsuranceNumber = patientModel.InsuranceNumber
+            };
+            _userRepository.Update(patient, "PATIENT");
+            _repository.Update(patient);
         }
     }
 }

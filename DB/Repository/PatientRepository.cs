@@ -9,6 +9,7 @@ namespace ZdravotniSystem.Repository
 
     public interface IPatientRepository : IRepository<Patient> { 
         Patient GetOneByEmail(string email);
+        void DeleteByEmail(string email);
     }
     public class PatientRepository : AbstractRepository, IPatientRepository
     {
@@ -94,12 +95,19 @@ namespace ZdravotniSystem.Repository
                 string
                     .Format(
                         "UPDATE patient " +
-                        "SET first_name = '{1}', last_name = '{2}', email = '{3}', " +
-                        "phone_number = '{4}', birthday = '{5}', insurance_number = {6} " +
-                        "WHERE id = {0}; ",
-                        entity.Id, entity.FirstName, entity.LastName, entity.Email,
-                        entity.PhoneNumber, entity.BirthDate, entity.InsuranceNumber
+                        "SET email = '{0}', " +
+                        "phone_number = '{1}', birthday = '{2}', insurance_number = {3} " +
+                        "WHERE email = '{0}'; ",
+                        entity.Email, entity.PhoneNumber, entity.BirthDate, entity.InsuranceNumber
                     );
+
+            cmd.ExecuteNonQuery();
+        }
+
+        public void DeleteByEmail(string email)
+        {
+            SQLiteCommand cmd = new(Connection);
+            cmd.CommandText = string.Format("DELETE FROM patient WHERE email = '{0}';", email);
 
             cmd.ExecuteNonQuery();
         }

@@ -8,10 +8,9 @@ import configurl from '../../assets/config/config.json';
 @Component({
   selector: 'patient-component',
   templateUrl: './patient.component.html',
-  styleUrls: ['./patient.component.css']
+  styleUrls: ['./patient.component.css'],
 })
 export class PatientComponent {
-  title = 'Zdravotni System App';
 
   @Output()
   public patient: Patient = new Patient();
@@ -41,11 +40,11 @@ export class PatientComponent {
   }
 
   private getPatient(email: string): Observable<Patient> {
-    return this.httpClient.get<Patient>(this.baseUrl + "patient?email=" + email);
+    return this.httpClient.get<Patient>(this.baseUrl + "?email=" + email);
   }
 
-  private update(patient: Patient): void {
-    this.httpClient.post(this.baseUrl + "patient", JSON.stringify(patient), {
+  public update(patient: Patient): void {
+    this.httpClient.post(this.baseUrl + "update", JSON.stringify(patient), {
       headers: new HttpHeaders({
         "Content-Type": "application/json"
       })
@@ -55,14 +54,16 @@ export class PatientComponent {
       //  this.errorMessage = err.message;
       //  this.showError = true;
       //}
-    });  }
+    });
+  }
 }
 
-export class Patient{
+export class Patient {
+  id?: number;
   firstName?: string;
   lastName?: string;
   email?: string;
-  phoneNumber?: string;
-  insuranseNumber?: string;
-  birthDate?: string;
+  phoneNumber?: number;
+  insuranceNumber?: string;
+  birthDate?: Date;
 }

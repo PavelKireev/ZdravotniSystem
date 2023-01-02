@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import configurl from '../../assets/config/config.json';
 
@@ -13,11 +13,13 @@ export class HomepageComponent {
 
   @Output()
   public tableList?: User[];
+  public currentType?: string;
 
   constructor(
+    private actRoute: ActivatedRoute,
     private jwtHelper: JwtHelperService,
     private httpClient: HttpClient,
-    private router: Router
+    private router: Router,
   ) { }
 
   ngOnInit(): void{
@@ -34,8 +36,13 @@ export class HomepageComponent {
     }
   }
 
+  isAdmin(): boolean {
+    return true;
+  }
+
   fillTable(): void {
-    this.httpClient.get<User[]>(configurl.apiServer.url + "/api/patient").subscribe(
+    let type = this.actRoute.snapshot.params['type']
+    this.httpClient.get<User[]>(configurl.apiServer.url + "/api/" + type + "/list").subscribe(
       (users: User[]) => {
         this.tableList = users;
         users.forEach(
@@ -67,10 +74,6 @@ export class HomepageComponent {
       _ => this.tableList = this.tableList?.filter(user => user.email !== email),
       error => console.log("User delete error.")
     );
-  }
-
-  public logOut = () => {
-    localStorage.removeItem("jwt");
   }
 }
 

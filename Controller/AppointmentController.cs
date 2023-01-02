@@ -8,9 +8,9 @@ namespace ZdravotniSystem.Controllers
     [ApiController, Authorize]
     public class AppointmentController : ControllerBase
     {
-        private readonly IAppointmentService _appointmentService;
+        private readonly AppointmentService _appointmentService;
 
-        public AppointmentController(IAppointmentService appointmentService)
+        public AppointmentController(AppointmentService appointmentService)
         {
             this._appointmentService = appointmentService;
         }

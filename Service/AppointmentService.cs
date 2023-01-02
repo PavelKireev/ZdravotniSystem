@@ -13,6 +13,11 @@ namespace ZdravotniSystem.Service
         private readonly ILogger<AppointmentService> _logger;
         private readonly IAppointmentRepository _appointmetRepository;
 
+        public AppointmentService(ILogger<AppointmentService> logger, IAppointmentRepository appointmetRepository)
+        {
+            _logger = logger;
+            _appointmetRepository = appointmetRepository;
+        }
     }
 
 }

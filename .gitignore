@@ -232,3 +232,5 @@ _Pvt_Extensions
 /Data source = Objednani.sqlite
 /Objednani.sqlite
 /ZdravotniSystem.sqlite
+
+.angular/cache/
