@@ -27,6 +27,7 @@ namespace ZdravotniSystem.Controller
         [HttpPost("create")]
         public List<WorkingHours> Post([FromBody] WorkingHours value, int doctorId)
         {
+            value.DoctorId = doctorId;
             _workingHoursService.Create(value);
             return _workingHoursService.GetWorkingHoursByDoctorId(doctorId);
         }

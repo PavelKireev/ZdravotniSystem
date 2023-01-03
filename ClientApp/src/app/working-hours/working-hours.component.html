@@ -13,9 +13,9 @@
          <th scope="col"></th>
        </tr>
      </thead>
-     <tbody *ngFor="let workingHoursItem of list; let i = index">
+     <tbody *ngFor="let workingHoursItem of list | async; let i = index">
        <tr>
-         <th scope="row">{{i + 1}}</th>
+         <th scope="row">{{i + 1}} {{workingHoursItem.id}}</th>
          <td>{{workingHoursItem.dayOfWeek}}</td>
          <td>{{workingHoursItem.hourFrom}}</td>
          <td>{{workingHoursItem.hoursCount}}</td>

@@ -1,8 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, of, switchMap } from 'rxjs';
 import configurl from '../../assets/config/config.json';
 import { AuthService } from '../service/auth.service';
+import { WorkingHoursService } from '../service/working-hours.service';
 
 @Component({
   selector: 'working-hours',
@@ -10,12 +12,15 @@ import { AuthService } from '../service/auth.service';
 })
 export class WorkingHoursComponent {
 
-  private doctorId?: number;
+  public idToDelete?: number;
 
   @Output()
   public workingHours: WorkingHours = new WorkingHours();
   @Output()
-  public list: Array<WorkingHours> = [];
+  public list: Observable<WorkingHours[]> = of();
+  public removeObservable: Observable<WorkingHours[]> = of();
+  public createObservable: Observable<WorkingHours[]> = of();
+
   @Output()
   public days: string[] = [];
 
@@ -27,51 +32,28 @@ export class WorkingHoursComponent {
   constructor(
     private authService: AuthService,
     private httpClient: HttpClient,
-    private actRoute: ActivatedRoute,
-    private router: Router
+    private workingHoursService: WorkingHoursService
   ) { }
 
   ngOnInit(): void {
-    this.doctorId = this.authService.getAuthUserId();
-    this.getAllByDoctorId(this.doctorId);
-    this.workingHours.doctorId = this.doctorId;
-  }
-
-  public getAllByDoctorId(doctorId: number): void {
-    this.doctorId = doctorId;
-    this.httpClient.get<WorkingHours[]>(this.baseUrl + 'list?doctorId=' + doctorId)
-      .subscribe(response => {
-        this.list = response;
-        this.days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].filter(day => !this.list.some(wh => wh.dayOfWeek === day));
-      });
-
+    this.list = this.workingHoursService.getAllByDoctorId();
+    this.list.subscribe(response => {
+      this.days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].filter(day => !response.some(wh => wh.dayOfWeek === day));
+    });
   }
 
   public create(workingHours: WorkingHours, day: string): void {
-    workingHours.dayOfWeek = day;
-    this.httpClient.post<WorkingHours[]>(this.baseUrl + "create?doctorId=" + this.authService.getAuthUserId(), JSON.stringify(workingHours), {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json"
-      })
-    }).subscribe(
-      response => {
-        this.list = response;
-        this.workingHours = new WorkingHours();
-        this.days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].filter(day => !this.list.some(wh => wh.dayOfWeek === day));
-      }
-    );
+    this.list = this.workingHoursService.saveWorkingHours(workingHours, day);
+    this.list.subscribe(response => {
+      this.days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].filter(day => !response.some(wh => wh.dayOfWeek === day));
+    });
   }
 
   public delete(id?: number): void {
-    this.httpClient.delete<WorkingHours[]>(
-      configurl.apiServer.url + "/api/working-hours/delete?id=" + id + "&doctorId=" + this.authService.getAuthUserId()
-    ).subscribe(
-      response => {
-        this.list = response;
-        this.workingHours = new WorkingHours();
-        this.days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].filter(day => !this.list.some(wh => wh.dayOfWeek === day));
-      }
-    );
+    this.list = this.workingHoursService.remove(id);
+    this.list.subscribe(response => {
+      this.days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].filter(day => !response.some(wh => wh.dayOfWeek === day));
+    });
   }
 
   public isUserAuthenticated(): boolean {

@@ -22,6 +22,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { WorkingHoursComponent } from './working-hours/working-hours.component';
 import { CreateUserComponent } from './create-user/create-user.component';
+import { WorkingHoursService } from './service/working-hours.service';
 
 const routes: Routes = [
   { path: '', component: MyProfileComponent },
@@ -76,7 +77,8 @@ export function tokenGetter() {
   providers: [
     AuthGuard,
     MatDatepickerModule,
-    AuthService
+    AuthService,
+    WorkingHoursService
   ],
   bootstrap: [AppComponent]
 })
