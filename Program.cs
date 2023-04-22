@@ -1,11 +1,8 @@
+using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Text;
 using ZdravotniSystem.Configuration;
-using ZdravotniSystem.Configuration.Data;
-using ZdravotniSystem.Configuration.Security;
-using ZdravotniSystem.DB.Entity;
 using ZdravotniSystem.DB.Repository;
 using ZdravotniSystem.Repository;
 using ZdravotniSystem.Service;

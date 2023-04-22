@@ -4,7 +4,7 @@ namespace ZdravotniSystem.Configuration.Data
 {
     public sealed class DataConfiguration
     {
-        public SQLiteConnection DbConnection { get; set; }
+        public SQLiteConnection DbConnection { get; private set; }
 
         private DataConfiguration() { }
 

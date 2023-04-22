@@ -16,7 +16,7 @@ namespace ZdravotniSystem.DB.Repository
         {
             SQLiteCommand cmd = new(Connection);
 
-            cmd.CommandText = string.Format("SELECT * FROM working_hours WHERE id = {0} ;", id);
+            cmd.CommandText = $"SELECT * FROM working_hours WHERE id = {id} ;";
             cmd.CommandType = CommandType.Text;
 
             SQLiteDataReader reader = cmd.ExecuteReader();

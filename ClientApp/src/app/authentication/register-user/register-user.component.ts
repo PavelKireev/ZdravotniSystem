@@ -11,6 +11,7 @@ import configurl from '../../../assets/config/config.json';
   styleUrls: ['./register-user.component.css']
 })
 export class RegisterUserComponent implements OnInit {
+
   registerForm!: FormGroup;
   errorMessage: string = '';
   showError: boolean = false;
@@ -28,7 +29,7 @@ export class RegisterUserComponent implements OnInit {
       firstName: new FormControl(''),
       lastName: new FormControl(''),
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
       confirm: new FormControl('')
     });
     this.registerForm.get('confirm')?.setValidators([Validators.required,this.passConfValidator.validateConfirmPassword(this.registerForm?.get('password'))]);

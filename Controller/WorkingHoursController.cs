@@ -10,7 +10,7 @@ namespace ZdravotniSystem.Controller
     [ApiController, Authorize]
     public class WorkingHoursController : ControllerBase
     {
-        public readonly IWorkingHoursService _workingHoursService;
+        private readonly IWorkingHoursService _workingHoursService;
 
         public WorkingHoursController(IWorkingHoursService workingHoursService)
         {

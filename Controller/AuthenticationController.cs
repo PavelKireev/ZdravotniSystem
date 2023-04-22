@@ -92,10 +92,8 @@ namespace ZdravotniSystem.Controller
                 _patientService.RegisterPatient(model);
                 return Ok();
             }
-            else
-            {
-                return BadRequest(validationResult.Message);
-            }
+
+            return BadRequest(validationResult.Message);
         }
 
         [HttpGet("my-profile"), Authorize]

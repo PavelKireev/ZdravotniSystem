@@ -44,7 +44,6 @@
     <TypeScriptCompile Include="ClientApp\src\app\guards\auth-guard.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\homepage\homepage.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\service\auth.service.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\service\products.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\working-hours\working-hours.component.ts" />
   </ItemGroup>
 

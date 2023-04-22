@@ -7,7 +7,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'login',
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
 

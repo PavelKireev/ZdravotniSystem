@@ -71,7 +71,7 @@ namespace ZdravotniSystem.Configuration.Data
                 "); " +
                 "INSERT OR REPLACE INTO users (first_name, last_name, email, password, role) " +
                 "VALUES ('admin', 'admin', 'admin@admin.com', '$2a$10$1heAywaRY7r/ACJlSSK84eiFy59T7D1SZM7lBUdsKb3f9I2xz7sjy', 'ADMIN');";
-
+            
             SQLiteCommand command = new(sql, connection);
             command.ExecuteNonQuery();
         }

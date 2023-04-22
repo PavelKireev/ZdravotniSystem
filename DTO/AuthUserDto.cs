@@ -10,6 +10,5 @@
         public DateTime? BirthDate { get; set; }
         public int InsuranceNumber { get; set; }
         public int OfficeNumber { get; set; }
-
     }
 }
